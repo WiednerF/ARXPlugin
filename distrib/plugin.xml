@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="ARX-Plugin"
+   iconfile="logo_64.png"
+   description="ARX-Plugin for medical anonymication"
+   tooltip="This is a Plugin for Medical anonymication of the data in one step"
+   category="Medical"
+   classname="org.deidentifier.arx.kettle.ARXPluginMeta">
+   <libraries>
+    <library name="dummy.jar"/>
+    <library name="lib/libarx-3.4.0.jar"/>
+    <library name="lib/swtknob-1.0.0.jar"/><library name="lib/swttable-0.0.1.jar"></library>
+   	<library name="lib/org.swtchart.ext_0.8.0.v20120301.jar"></library>
+   	<library name="lib/org.swtchart_0.8.0.v20120301.jar"></library>
+   	<library name="lib/org.eclipse.nebula.visualization.widgets_1.0.0.201511041902.jar"></library>
+   	<library name="lib/org.eclipse.nebula.visualization.xygraph_1.0.0.201511041902.jar"></library>
+   	<library name="lib/org.eclipse.draw2d_3.8.1.201301141834.jar"></library>
+   </libraries>
+    
+   <localized_category>
+     <category locale="en_US">Medical</category>
+     <category locale="nl_NL">Medical</category>
+     <category locale="fr_FR">Transformation</category>
+   </localized_category>
+   <localized_description>
+     <description locale="en_US">ARX-Plugin</description>
+     <description locale="nl_NL">Plugin voorbeeld</description>
+     <description locale="fr_FR">Example de plugin</description>
+   </localized_description>
+   <localized_tooltip>
+     <tooltip locale="en_US">This is a Plugin for Medical anonymication of the data in one step</tooltip>
+     <tooltip locale="nl_NL">Dit is een voorbeeld plugin ook wel 'dummy plugin' geheten</tooltip>
+     <tooltip locale="fr_FR">CeÃ§i est une example de plugin</tooltip>
+   </localized_tooltip>
+   
+</plugin>

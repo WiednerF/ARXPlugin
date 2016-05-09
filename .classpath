@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/CDC-1.0%Foundation-1.0"/>
+	<classpathentry kind="lib" path="libext/swtknob-1.0.0.jar"/>
+	<classpathentry kind="lib" path="libext/swttable-0.0.1.jar"/>
+	<classpathentry kind="lib" path="libext/org.swtchart_0.8.0.v20120301.jar"/>
+	<classpathentry kind="lib" path="libext/org.swtchart.ext_0.8.0.v20120301.jar"/>
+	<classpathentry kind="lib" path="libext/org.eclipse.nebula.visualization.widgets_1.0.0.201511041902.jar"/>
+	<classpathentry kind="lib" path="libext/org.eclipse.nebula.visualization.xygraph_1.0.0.201511041902.jar"/>
+	<classpathentry kind="lib" path="libext/org.eclipse.draw2d_3.8.1.201301141834.jar"/>
+	<classpathentry kind="lib" path="libext/libarx-3.4.0.jar"/>
+	<classpathentry kind="lib" path="libext/kettle-core-4.0.jar"/>
+	<classpathentry kind="lib" path="libext/kettle-db-4.0.jar"/>
+	<classpathentry kind="lib" path="libext/kettle-engine-4.0.jar"/>
+	<classpathentry kind="lib" path="libext/kettle-ui-swt-4.0.jar"/>
+	<classpathentry kind="lib" path="libswt/win32/swt.jar"/>
+	<classpathentry kind="lib" path="libswt/commands.jar"/>
+	<classpathentry kind="lib" path="libswt/common.jar"/>
+	<classpathentry kind="lib" path="libswt/jface.jar"/>
+	<classpathentry kind="lib" path="libswt/runtime.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
