@@ -89,7 +89,7 @@ public class LayoutTopRight {
      
       tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
       
-      new ViewRisksClassTable(tabFieldComp,result,result2,data,config,population,true);
+      new ViewRisksDistributionTable(tabFieldComp,result,result2,data,config,population,true);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
@@ -104,7 +104,7 @@ public class LayoutTopRight {
      
       tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
       
-      new ViewRisksClassPlot(tabFieldComp,result,result2,data,config,population,true);
+      new ViewRisksDistributionPlot(tabFieldComp,result,result2,data,config,population,true);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );

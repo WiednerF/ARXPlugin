@@ -105,7 +105,7 @@ public class LayoutTopLeft {
      
       tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
       
-      new ViewRisksClassTable(tabFieldComp,result,null,data,config,population,false);
+      new ViewRisksDistributionTable(tabFieldComp,result,null,data,config,population,false);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
@@ -120,7 +120,7 @@ public class LayoutTopLeft {
 	     
 	      tabFieldComp.setLayout( SWTUtil.createGridLayoutWithEqualWidth(1));
       
-        new ViewRisksClassPlot(tabFieldComp,result,null,data,config,population,false);
+        new ViewRisksDistributionPlot(tabFieldComp,result,null,data,config,population,false);
       
 
         tabFieldComp.layout();
