@@ -66,27 +66,21 @@ public class LayoutBottomLeft {
 	
 	private void buildPopulation(CTabFolder parent){
 		CTabItem tabField = new CTabItem( parent, SWT.NONE );
-	 	tabField.setText( Resources.getMessage("RiskAnalysis.16") );
-   		      
-      ScrolledComposite scroller=new ScrolledComposite(parent,SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+	 	tabField.setText( Resources.getMessage("RiskAnalysis.24")   );   
      
-      Composite tabFieldComp = new Composite( scroller, SWT.NONE );
+      Composite tabFieldComp = new Composite( parent, SWT.NONE );
      
       tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
       
-        //TODO Generate Inner Class
+      new ViewRisksPopulationModel(tabFieldComp,result,result2,data,config,population,false);
       
       tabFieldComp.layout();
-      tabField.setControl( scroller );
-      scroller.setContent(tabFieldComp);
-      scroller.setExpandVertical(true);
-      scroller.setExpandHorizontal(true);
-      scroller.setMinSize(tabFieldComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+      tabField.setControl( tabFieldComp );
 	}
 	
 	private void buildPopulationUniquessAll(CTabFolder parent){
 		CTabItem tabField = new CTabItem( parent, SWT.NONE );
-	 	tabField.setText( Resources.getMessage("RiskAnalysis.24")   );   
+	 	tabField.setText( Resources.getMessage("RiskAnalysis.12")   );   
      
       Composite tabFieldComp = new Composite( parent, SWT.NONE );
      
