@@ -10,6 +10,7 @@ import org.deidentifier.arx.kettle.dialoge.resources.ClipboardHandlerTable;
 import org.deidentifier.arx.risk.RiskEstimateBuilder;
 import org.deidentifier.arx.risk.RiskEstimateBuilderInterruptible;
 import org.deidentifier.arx.risk.RiskModelHistogram;
+import org.deidentifier.arx.risk.RiskModelSampleRiskDistribution;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -89,6 +90,7 @@ public class ViewRisksDistributionTable {
         c.setWidth("33%", "100px"); //$NON-NLS-1$ //$NON-NLS-2$
         c.setText(Resources.getMessage("RiskAnalysis.1")); //$NON-NLS-1$
         c = new DynamicTableColumn(table, SWT.LEFT);
+        SWTUtil.createColumnWithBarCharts(table, c);
         c.setWidth("33%", "100px"); //$NON-NLS-1$ //$NON-NLS-2$
         c.setText(Resources.getMessage("RiskAnalysis.2")); //$NON-NLS-1$
         c = new DynamicTableColumn(table, SWT.LEFT);
@@ -110,22 +112,32 @@ public class ViewRisksDistributionTable {
         }
         if(builder!=null){
 
-              int[]                    distribution;
-              double                   numClasses;
+        	double[] frequencies;
+            double[] cumulative;
+            String[] labels;
              // Perform work
-              // Perform work
-              RiskModelHistogram model = builder.getEquivalenceClassModel();
-              distribution = model.getHistogram();
-              numClasses = model.getNumClasses();
+         // Perform work
+            RiskModelSampleRiskDistribution model = builder.getSampleBasedRiskDistribution();
 
-              for (int i = 0; i < distribution.length; i += 2) {
-                  TableItem item = new TableItem(table, SWT.NONE);
-                  item.setText(0, String.valueOf(distribution[i]));
-                  item.setText(1, String.valueOf(distribution[i + 1]));
-                  item.setData("2", (double) distribution[i + 1] / numClasses);
-              }
+            // Create array
+            frequencies = model.getFractionOfRecordsForRiskThresholds();
+            cumulative = model.getFractionOfRecordsForCumulativeRiskThresholds();
+            labels = new String[frequencies.length];
+            for (int i = 0; i < frequencies.length; i++) {
+                labels[i] = String.valueOf(SWTUtil.getPrettyString(model.getAvailableRiskThresholds()[i] * 100d));
+            }
+            labels[0] = "<=" + SWTUtil.getPrettyString(1e-6); //$NON-NLS-1$
 
-              root.layout();
+
+         // Create entries
+            for (int i = labels.length-1; i >=0 ; i--) {
+                TableItem item = new TableItem(table, SWT.NONE);
+                item.setText(0, labels[i]);
+                item.setData("1", frequencies[i]);
+                item.setData("2", cumulative[i]);
+            }
+
+            root.layout();
         }
 	}
 	
