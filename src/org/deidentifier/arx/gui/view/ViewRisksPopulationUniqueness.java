@@ -9,6 +9,7 @@ import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.risk.RiskEstimateBuilder;
+import org.deidentifier.arx.risk.RiskModelHistogram;
 import org.deidentifier.arx.risk.RiskModelPopulationUniqueness;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
@@ -101,7 +102,7 @@ public class ViewRisksPopulationUniqueness {
         this.root.setLayout(new FillLayout());
         this.root.setLayoutData(SWTUtil.createFillGridDataBoth());
 
-        chart = new Chart(root, SWT.NONE);
+             chart = new Chart(root, SWT.NONE);
         chart.setOrientation(SWT.HORIZONTAL);
         
         // Show/Hide axis
@@ -111,40 +112,7 @@ public class ViewRisksPopulationUniqueness {
                 updateCategories();
             }
         });
-     /**   chart.getPlotArea().addListener(SWT.MouseMove, new Listener() {
-            public void handleEvent(Event event) {
-                IAxisSet axisSet = chart.getAxisSet();
-                StringBuilder builder = new StringBuilder();
-                if (axisSet != null) {
-                    IAxis xAxis = axisSet.getXAxis(0);
-                    if (xAxis != null) {
-                        String[] series = xAxis.getCategorySeries();
-                        ISeries[] data = chart.getSeriesSet().getSeries();
-                        int x = (int) Math.round(xAxis.getDataCoordinate(event.x));
-                        if (x >= 0 && x < series.length) {
-                            for (int i = 0; i < data.length; i++) {
-                                ISeries yseries = data[i];
-                                builder.append(yseries.getId());
-                                builder.append("("); //$NON-NLS-1$
-                                builder.append(series[x]);
-                                builder.append(", "); //$NON-NLS-1$
-                                builder.append(yseries.getYSeries()[x]);
-                                builder.append(")"); //$NON-NLS-1$
-                                if (i < data.length - 1) {
-                                    builder.append(", "); //$NON-NLS-1$
-                                }
-                            }
-                        }
-                    }
-                }
-                if (builder.length() != 0) {
-                    chart.getPlotArea().setToolTipText(builder.toString());
-                } else {
-                    chart.getPlotArea().setToolTipText(null);
-                }
-            }
-        });**///TODO Find Error
-
+        
         // Update font
         FontData[] fd = chart.getFont().getFontData();
         fd[0].setHeight(8);
@@ -204,7 +172,8 @@ public class ViewRisksPopulationUniqueness {
         // Initialize y-axis
         ITitle yAxisTitle = yAxis.getTitle();
         yAxisTitle.setText(Resources.getMessage("ViewRisksPlotUniquenessEstimates.0")); //$NON-NLS-1$
-        chart.setEnabled(true);
+        xAxisTitle.setText(Resources.getMessage("ViewRisksPlotUniquenessEstimates.1")); //$NON-NLS-1$
+        chart.setEnabled(false);
         updateCategories();
      // Enable/disable
         DataHandle context;
@@ -224,43 +193,53 @@ public class ViewRisksPopulationUniqueness {
              dataZayatz = new double[POINTS.length];
               dataSNB = new double[POINTS.length];
              RiskEstimateBuilder Basebuilder=context.getRiskEstimator(population);
+             int sampleSize=context.getNumRows();
+             RiskEstimateBuilder builder=Basebuilder;
              for (idx = 0; idx < POINTS.length; idx++) {
-            	 RiskEstimateBuilder builder=Basebuilder;
-                 builder = context.getRiskEstimator(ARXPopulationModel.create((int) population.getPopulationSize(), POINTS[idx]), builder.getEquivalenceClassModel());
-                 Basebuilder=builder;
+            	 RiskModelHistogram histogram = builder.getEquivalenceClassModel();
+                 ARXPopulationModel population = ARXPopulationModel.create(sampleSize, POINTS[idx]);
+                 builder = context.getRiskEstimator(population, histogram);
+                 
                  if (idx == 0 && builder.getSampleBasedUniquenessRisk().getFractionOfUniqueTuples() == 0.0d) {
                      Arrays.fill(dataDankar, 0.0d);
-                     if (all) {
-                         Arrays.fill(dataPitman, 0.0d);
-                         Arrays.fill(dataZayatz, 0.0d);
-                         Arrays.fill(dataSNB, 0.0d);
-                     }
+                     Arrays.fill(dataPitman, 0.0d);
+                     Arrays.fill(dataZayatz, 0.0d);
+                     Arrays.fill(dataSNB, 0.0d);
                      break;
                  }
                  RiskModelPopulationUniqueness populationBasedModel = builder.getPopulationBasedUniquenessRisk();
                  dataDankar[idx] = populationBasedModel.getFractionOfUniqueTuplesDankar();
-                 if (this.all) {
-                     dataPitman[idx] = populationBasedModel.getFractionOfUniqueTuplesPitman();
-                     dataZayatz[idx] = populationBasedModel.getFractionOfUniqueTuplesZayatz();
-                     dataSNB[idx] = populationBasedModel.getFractionOfUniqueTuplesSNB();
-                 }
+                 dataPitman[idx] = populationBasedModel.getFractionOfUniqueTuplesPitman();
+                 dataZayatz[idx] = populationBasedModel.getFractionOfUniqueTuplesZayatz();
+                 dataSNB[idx] = populationBasedModel.getFractionOfUniqueTuplesSNB();
              }
+             
+             makePercentage(dataDankar);
+             makePercentage(dataPitman);
+             makePercentage(dataZayatz);
+             makePercentage(dataSNB);
+             
              ISeriesSet seriesSet = chart.getSeriesSet();
-             if (all) {
-                 createSeries(seriesSet, dataPitman, "Pitman", PlotSymbolType.CIRCLE, new Color (Display.getCurrent(), 0, 0, 0)); //$NON-NLS-1$
-                 createSeries(seriesSet, dataZayatz, "Zayatz", PlotSymbolType.CROSS, new Color (Display.getCurrent(), 0, 0, 255)); //$NON-NLS-1$
-                 createSeries(seriesSet, dataSNB, "SNB", PlotSymbolType.DIAMOND, new Color (Display.getCurrent(), 255, 0, 0)); //$NON-NLS-1$
-                 createSeries(seriesSet, dataDankar, "Dankar", PlotSymbolType.SQUARE, new Color (Display.getCurrent(), 0,255, 0)); //$NON-NLS-1$
-                 chart.getLegend().setVisible(true);
-             } else {
-                 createSeries(seriesSet, dataDankar, "Dankar", PlotSymbolType.SQUARE, new Color (Display.getCurrent(), 0, 0, 0)); //$NON-NLS-1$
-                 chart.getLegend().setVisible(false);
+             createSeries(seriesSet, dataPitman, "Pitman", PlotSymbolType.CIRCLE, new Color(Display.getCurrent(),0,0,0)); //$NON-NLS-1$
+             if(this.all){
+             createSeries(seriesSet, dataZayatz, "Zayatz", PlotSymbolType.CROSS, new Color(Display.getCurrent(),0,0,255)); //$NON-NLS-1$
+             createSeries(seriesSet, dataSNB, "SNB", PlotSymbolType.DIAMOND, new Color(Display.getCurrent(),0,255,0)); //$NON-NLS-1$
+             createSeries(seriesSet, dataDankar, "Dankar", PlotSymbolType.SQUARE, new Color(Display.getCurrent(),255,0,0)); //$NON-NLS-1$
+             chart.getLegend().setVisible(true);
+             }
+             
+             seriesSet.bringToFront("Pitman"); //$NON-NLS-1$
+             if(this.all){
+             seriesSet.bringToFront("Zayatz"); //$NON-NLS-1$
+             seriesSet.bringToFront("SNB"); //$NON-NLS-1$
+
+             seriesSet.bringToFront("Dankar"); //$NON-NLS-1$
              }
              
              IAxisSet axisSetI = chart.getAxisSet();
 
              IAxis yAxisI = axisSetI.getYAxis(0);
-             yAxisI.setRange(new Range(0d, 1d));
+             yAxis.setRange(new Range(0d, 100d));
 
              IAxis xAxisI = axisSetI.getXAxis(0);
              xAxisI.setRange(new Range(0d, LABELS.length));
@@ -276,7 +255,7 @@ public class ViewRisksPopulationUniqueness {
 	}
 	
 	  /**
-     * Creates a series
+    * Creates a series
      * @param seriesSet
      * @param data
      * @param label
@@ -315,6 +294,14 @@ public class ViewRisksPopulationUniqueness {
             }
         }
     }
+    /** Convert to percentage
+    * @param data
+    */
+   private void makePercentage(double[] data) {
+       for (int i = 0; i < data.length; i++) {
+           data[i] = data[i] * 100d;
+       }
+   }
 	
 
 }
