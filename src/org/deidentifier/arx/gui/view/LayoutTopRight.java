@@ -24,6 +24,7 @@ public class LayoutTopRight {
     private ARXPopulationModel population;
     private DataHandle result2;
 	public ViewRisksReidentificationRisks reidentification;
+	public ViewRisksQuasiIdentifierTable quasiIdentifier; 
 
 	public LayoutTopRight(final Composite parent,ARXResult result,DataHandle result2, Data data, ARXConfiguration config,ARXPopulationModel population) {
 		this.result=result;
@@ -71,7 +72,7 @@ public class LayoutTopRight {
      
       tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
       
-        //TODO Generate Inner Class
+      this.quasiIdentifier= new ViewRisksQuasiIdentifierTable(tabFieldComp,result,result2,data,config,population,true);
       
       tabFieldComp.layout();
       tabField.setControl( scroller );

@@ -23,14 +23,16 @@ public class LayoutBottomLeft {
     private ARXConfiguration config;
     private ARXPopulationModel population;
     private DataHandle result2;
+    private LayoutRisks parentLayout;
 
-	public LayoutBottomLeft(final Composite parent,ARXResult result,DataHandle result2, Data data, ARXConfiguration config,ARXPopulationModel population) {
+	public LayoutBottomLeft(final Composite parent,ARXResult result,DataHandle result2, Data data, ARXConfiguration config,ARXPopulationModel population,LayoutRisks parentLayout) {
 		this.data=data;
 		this.result2=result2;
 		this.config=config;
 		this.population=population;
 		this.parent=parent;
 		this.result=result;
+		this.parentLayout=parentLayout;
 		folder = new CTabFolder( this.parent,SWT.BORDER );
 		folder.setSimple( false );
 		this.build(folder);      
@@ -49,23 +51,18 @@ public class LayoutBottomLeft {
 	
 	private void buildQuasiIdentifiers(CTabFolder parent){
 		CTabItem tabField = new CTabItem( parent, SWT.NONE );
-	 	tabField.setText( Resources.getMessage("RiskAnalysis.23") );
-   		      
-      ScrolledComposite scroller=new ScrolledComposite(parent,SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+	 	tabField.setText( Resources.getMessage("RiskAnalysis.23")   );   
      
-      Composite tabFieldComp = new Composite( scroller, SWT.NONE );
+      Composite tabFieldComp = new Composite( parent, SWT.NONE );
      
       tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
       
-        //TODO Generate Inner Class
+      new ViewRisksQuasiIdentifier(tabFieldComp,result,result2,data,config,population,false,this.parentLayout);
       
       tabFieldComp.layout();
-      tabField.setControl( scroller );
-      scroller.setContent(tabFieldComp);
-      scroller.setExpandVertical(true);
-      scroller.setExpandHorizontal(true);
-      scroller.setMinSize(tabFieldComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+      tabField.setControl( tabFieldComp );
 	}
+	
 	
 	private void buildPopulation(CTabFolder parent){
 		CTabItem tabField = new CTabItem( parent, SWT.NONE );

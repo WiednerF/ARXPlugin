@@ -8,64 +8,30 @@ import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.dialoge.resources.ClipboardHandlerTable;
 import org.deidentifier.arx.risk.RiskEstimateBuilder;
-import org.deidentifier.arx.risk.RiskEstimateBuilderInterruptible;
-import org.deidentifier.arx.risk.RiskModelHistogram;
 import org.deidentifier.arx.risk.RiskModelSampleRiskDistribution;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.swtchart.Chart;
-import org.swtchart.IAxis;
-import org.swtchart.IAxisSet;
-import org.swtchart.IBarSeries;
-import org.swtchart.ISeries;
-import org.swtchart.ISeriesSet;
-import org.swtchart.ITitle;
-import org.swtchart.Range;
-
 import de.linearbits.swt.table.DynamicTable;
 import de.linearbits.swt.table.DynamicTableColumn;
-
-import org.swtchart.ISeries.SeriesType;
 
 
 public class ViewRisksDistributionTable {
 	
-	/** Minimal width of a category label. */
-    private static final int MIN_CATEGORY_WIDTH = 10;
-	
-	final private ARXResult result;
 	/** View */
     private Composite root;
-    
-    /** View */
-    private Chart            chart;
-    
-
     private Data data;
-    private ARXConfiguration config;
     private ARXPopulationModel population;
     private boolean input;
     private DynamicTable table;
     private DataHandle result2;
     
 	public ViewRisksDistributionTable(final Composite parent,ARXResult result,DataHandle result2,Data data, ARXConfiguration config,ARXPopulationModel population,boolean input) {
-		this.result=result;
 		this.result2=result2;
 		this.data=data;
-		this.config=config;
 		this.population=population;
 		this.input=input;
 		try{
@@ -106,7 +72,7 @@ public class ViewRisksDistributionTable {
      // Enable/disable
         final RiskEstimateBuilder builder;
         if(this.input!=true){
-        	builder=this.data.getHandle().getRiskEstimator(population);//TODO Error (Failure Ask)
+        	builder=this.data.getHandle().getRiskEstimator(population);
         }else{
         	builder=this.result2.getRiskEstimator(population);
         }

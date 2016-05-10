@@ -57,7 +57,7 @@ public class LayoutRisks {
     /** View */
     private final SashForm            centerSash;
     
-    private LayoutTopLeft layoutTopLeft;
+    public LayoutTopLeft layoutTopLeft;
     public LayoutTopRight layoutTopRight;
     private LayoutBottomLeft layoutBottomLeft;
     private LayoutBottomRight layoutBottomRight;
@@ -117,7 +117,7 @@ public class LayoutRisks {
 
         /** Create views**/
         layoutBottomLeft = new LayoutBottomLeft(bottomLeft,
-        		result,result2,data,config,population);
+        		result,result2,data,config,population,this);
         layoutBottomRight = new LayoutBottomRight(bottomRight,
         		result,result2,data,config,population);
         // Sync folders

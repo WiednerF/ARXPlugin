@@ -6,6 +6,7 @@ import org.deidentifier.arx.ARXPopulationModel;
 import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
+import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.LayoutRisks;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
@@ -44,10 +45,10 @@ public class ARXRiskAnalysis extends Thread {
 	}
 	
 	public void run(){
-		 //FROM HERE On RISK ANALYCIS TODO
-        //TODO From here on
         
         final Shell shell = new Shell(display.getActiveShell(),SWT.DIALOG_TRIM | SWT.RESIZE | SWT.MAX | SWT.MIN );
+        shell.setText("Risk Analytics from the Anonymication with the ARX Tool");
+        shell.setImage(Resources.getImage("logo_64.png"));
         
 	    shell.setLayout(SWTUtil.createGridLayout(2));
 	    new LayoutRisks(shell,result,result2,data,config,population);
