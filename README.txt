@@ -5,4 +5,4 @@ If you for some reason require the libs for other platforms, just copying them o
 
 Please check for later versions for the Kettle-jars in the libext folder. The actual included jars are from a development release 3.0.0 M2.
 
-If you build this, the result will be in folder "DummyPluginForDeploy".
+If you build this, the result will be in folder "ARXPluginForDeploy".
