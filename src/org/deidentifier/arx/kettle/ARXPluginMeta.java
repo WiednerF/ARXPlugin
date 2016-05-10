@@ -1076,9 +1076,9 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 			for (Region regionOptimal : Region.values()) {
 				if (this.region.equals(regionOptimal.getName())) {
 					regionName = regionOptimal;
+					break;
 				}
 			}
-			// TODO Get Sampling Size (Ask)
 			return new RegionStore("region", (0.1d), (regionName != null ? regionName.getPopulationSize() : 0));
 		}
 	}
@@ -1096,7 +1096,6 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 	public void setRegion(String name, double sampling, long population) {
 		if (this.regions.containsKey(name)) {
 			RegionStore temp = this.regions.get(name);
-			temp.setName(name);
 			temp.setSampling(sampling);
 			temp.setPopulation(population);
 		} else {
@@ -1524,11 +1523,11 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 	 * @return The ARXField Object for this field name
 	 */
 	public ARXFields getField(String name) {
-		if (this.fields.get(name) != null) {
-			return this.fields.get(name);
+		ARXFields temp=this.fields.get(name);
+		if (temp == null) {
+			temp = new ARXFields(name);
+			this.fields.put(name, temp);
 		}
-		ARXFields temp = new ARXFields(name);
-		this.fields.put(name, temp);
 		return temp;
 	}
 
@@ -1552,10 +1551,12 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 	public String[] getQuasiIdentifierFields(String[] fieldNames) {
 		if (fieldNames != null) {
 			ArrayList<String> list = new ArrayList<String>();
-			for (int i = 0; i < fieldNames.length; i++) {
-				ARXFields temp = this.fields.get(fieldNames[i]);
+			for (String field:fieldNames) {
+				ARXFields temp = this.fields.get(field);
 				if (temp != null && temp.getType().equals("Quasi-identifying")) {
-					list.add(temp.getName());
+					list.add(field);
+				}else if(temp==null){
+					list.add(field);
 				}
 			}
 			return list.toArray(new String[list.size()]);
