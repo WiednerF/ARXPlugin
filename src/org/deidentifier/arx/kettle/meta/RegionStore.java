@@ -26,15 +26,16 @@ import org.pentaho.di.repository.Repository;
 
 /**
  * This class contains the Storageformat for one Region.</br>
- * Every region has one of this file. This file also handles the Creating of
- * the Storages for the whole Project with Regions.
+ * Every region has one of this file. This file also handles the Creating of the
+ * Storages for the whole Project with Regions.
+ * 
  * @author Florian Wiedner
  * @since 1.5
  * @category ARXPluginMeta
  *
  */
 public class RegionStore {
-	
+
 	/**
 	 * The name of the Region
 	 */
@@ -49,60 +50,70 @@ public class RegionStore {
 	private long population;
 
 	/**
-	 * Creates a complete new RegionStore out of the Data Provided.
-	 * This is for the Case, when you do not have any Stored Values
-	 * until now.
-	 * @param name The Name of the Region
-	 * @param sampling The Sampling Size out of the Population
-	 * @param population The PopulationSize of this Region
+	 * Creates a complete new RegionStore out of the Data Provided. This is for
+	 * the Case, when you do not have any Stored Values until now.
+	 * 
+	 * @param name
+	 *            The Name of the Region
+	 * @param sampling
+	 *            The Sampling Size out of the Population
+	 * @param population
+	 *            The PopulationSize of this Region
 	 * @author Florian Wiedner
 	 * @category RegionStore
 	 * @since 1.1
 	 */
-	public RegionStore(String name,double sampling,long population) {
-		this.name=name;
-		this.sampling=sampling;
-		this.population=population;
+	public RegionStore(String name, double sampling, long population) {
+		this.name = name;
+		this.sampling = sampling;
+		this.population = population;
 	}
-	
+
 	/**
 	 * This Constructor creates a RegionStore out of the XML Storage Format
-	 * @param tempRegion The Node of the XML Storage
+	 * 
+	 * @param tempRegion
+	 *            The Node of the XML Storage
 	 * @author Florian Wiedner
 	 * @category RegionStore
 	 * @since 1.1
 	 */
-	public RegionStore(Node tempRegion){
-		this.name=XMLHandler.getTagValue(tempRegion,"name");
-		this.sampling=Double.parseDouble(XMLHandler.getTagValue(tempRegion,"sampling"));
-		this.population=Long.parseLong(XMLHandler.getTagValue(tempRegion, "population"));
+	public RegionStore(Node tempRegion) {
+		this.name = XMLHandler.getTagValue(tempRegion, "name");
+		this.sampling = Double.parseDouble(XMLHandler.getTagValue(tempRegion, "sampling"));
+		this.population = Long.parseLong(XMLHandler.getTagValue(tempRegion, "population"));
 	}
-	
+
 	/**
 	 * Creates a new RegionStore out of the Database Storage
-	 * @param rep The Database Repository
-	 * @param id_step The id of the actual Step
-	 * @param count The number for the Region out of the Region Array
+	 * 
+	 * @param rep
+	 *            The Database Repository
+	 * @param id_step
+	 *            The id of the actual Step
+	 * @param count
+	 *            The number for the Region out of the Region Array
 	 * @throws KettleException
 	 * @author Florian Wiedner
 	 * @category RegionStore
 	 * @since 1.1
 	 */
-	public RegionStore(Repository rep, ObjectId id_step,int count) throws KettleException{
+	public RegionStore(Repository rep, ObjectId id_step, int count) throws KettleException {
 		this.setName(rep.getStepAttributeString(id_step, count, "regionsName"));
 		this.setSampling(Double.parseDouble(rep.getStepAttributeString(id_step, count, "regionsSampling")));
 		this.setPopulation(Long.parseLong(rep.getStepAttributeString(id_step, count, "regionsPopulation")));
-		
+
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString(){
-		return name+": "+sampling+"-"+population;
+	public String toString() {
+		return name + ": " + sampling + "-" + population;
 	}
-	
+
 	/***
 	 * Generates the XML Output for the Storage of this Region</br>
 	 * 
@@ -110,44 +121,46 @@ public class RegionStore {
 	 * @category RegionStore
 	 * @return String The String of the XML Representation
 	 */
-	  public String getXML() {
-		    String retval = "";
+	public String getXML() {
+		String retval = "";
 
-		    retval += "      <region>" + Const.CR;
-		    retval += "        " + XMLHandler.addTagValue( "name", getName() );
-		    retval += "        " + XMLHandler.addTagValue( "sampling", getSampling() );
-		    retval += "        " + XMLHandler.addTagValue( "population", getPopulation() );
-		    retval += "        </region>" + Const.CR;
+		retval += "      <region>" + Const.CR;
+		retval += "        " + XMLHandler.addTagValue("name", getName());
+		retval += "        " + XMLHandler.addTagValue("sampling", getSampling());
+		retval += "        " + XMLHandler.addTagValue("population", getPopulation());
+		retval += "        </region>" + Const.CR;
 
-		    return retval;
-	  }
-	  
-	  /**
-		 * This Method saves our RegionStore Configuration in the Database way of Storage</br>
-		 * 
-		 * @author Florian Wiedner
-		 * @category RegionStorage
-		 * @since 1.5
-		 * @throws KettleException
-		 * @param rep
-		 *            The Repository in the Database
-		 * @param id_transformation
-		 *            The Object ID of our Transformation
-		 * @param id_step
-		 *            The Object ID for our Step in the Transformation
-		 * @param count The actual Place of this Storage
-		 */
-		public void saveRep(Repository rep, ObjectId id_transformation, ObjectId id_step,int count) throws KettleException {
-			rep.saveStepAttribute(id_transformation, id_step, count, "regionsName", this.getName());
-			rep.saveStepAttribute(id_transformation, id_step, count, "regionsSampling", this.getSampling());
-			rep.saveStepAttribute(id_transformation, id_step, count, "regionsPopulation", this.getPopulation());
-		}
+		return retval;
+	}
 
+	/**
+	 * This Method saves our RegionStore Configuration in the Database way of
+	 * Storage</br>
+	 * 
+	 * @author Florian Wiedner
+	 * @category RegionStorage
+	 * @since 1.5
+	 * @throws KettleException
+	 * @param rep
+	 *            The Repository in the Database
+	 * @param id_transformation
+	 *            The Object ID of our Transformation
+	 * @param id_step
+	 *            The Object ID for our Step in the Transformation
+	 * @param count
+	 *            The actual Place of this Storage
+	 */
+	public void saveRep(Repository rep, ObjectId id_transformation, ObjectId id_step, int count)
+			throws KettleException {
+		rep.saveStepAttribute(id_transformation, id_step, count, "regionsName", this.getName());
+		rep.saveStepAttribute(id_transformation, id_step, count, "regionsSampling", this.getSampling());
+		rep.saveStepAttribute(id_transformation, id_step, count, "regionsPopulation", this.getPopulation());
+	}
 
 	/**
 	 * @author Florian Wiedner
-		 * @category RegionStorage
-		 * @since 1.5
+	 * @category RegionStorage
+	 * @since 1.5
 	 * @return The Name of the Region
 	 */
 	public String getName() {
@@ -156,9 +169,10 @@ public class RegionStore {
 
 	/**
 	 * @author Florian Wiedner
-		 * @category RegionStorage
-		 * @since 1.5
-	 * @param name Set a new Name to the Region
+	 * @category RegionStorage
+	 * @since 1.5
+	 * @param name
+	 *            Set a new Name to the Region
 	 */
 	private void setName(String name) {
 		this.name = name;
@@ -166,8 +180,8 @@ public class RegionStore {
 
 	/**
 	 * @author Florian Wiedner
-		 * @category RegionStorage
-		 * @since 1.5
+	 * @category RegionStorage
+	 * @since 1.5
 	 * @return The Sampling Fraction for this Region
 	 */
 	public double getSampling() {
@@ -176,9 +190,10 @@ public class RegionStore {
 
 	/**
 	 * @author Florian Wiedner
-		 * @category RegionStorage
-		 * @since 1.5
-	 * @param sampling The SamplingFraction for this Region
+	 * @category RegionStorage
+	 * @since 1.5
+	 * @param sampling
+	 *            The SamplingFraction for this Region
 	 */
 	public void setSampling(double sampling) {
 		this.sampling = sampling;
@@ -186,8 +201,8 @@ public class RegionStore {
 
 	/**
 	 * @author Florian Wiedner
-		 * @category RegionStorage
-		 * @since 1.5
+	 * @category RegionStorage
+	 * @since 1.5
 	 * @return The Population Size of this Region
 	 */
 	public long getPopulation() {
@@ -196,9 +211,10 @@ public class RegionStore {
 
 	/**
 	 * @author Florian Wiedner
-		 * @category RegionStorage
-		 * @since 1.5
-	 * @param population The PopulationSize of this Region
+	 * @category RegionStorage
+	 * @since 1.5
+	 * @param population
+	 *            The PopulationSize of this Region
 	 */
 	public void setPopulation(long population) {
 		this.population = population;
