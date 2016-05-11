@@ -2,7 +2,7 @@ package org.deidentifier.arx.kettle.dialoge;
 
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
-import org.deidentifier.arx.kettle.attribut.ARXFields;
+import org.deidentifier.arx.kettle.meta.ARXFields;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;

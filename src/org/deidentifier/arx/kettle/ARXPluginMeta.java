@@ -23,8 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.deidentifier.arx.ARXPopulationModel.Region;
-import org.deidentifier.arx.kettle.attribut.ARXFields;
-import org.deidentifier.arx.kettle.attribut.RegionStore;
+import org.deidentifier.arx.kettle.meta.ARXFields;
+import org.deidentifier.arx.kettle.meta.RegionStore;
 import org.eclipse.swt.widgets.Shell;
 import org.pentaho.di.core.CheckResult;
 import org.pentaho.di.core.CheckResultInterface;
@@ -61,10 +61,6 @@ import org.w3c.dom.Node;
  * @category Storage
  * @version 1.0.0
  * @since 10.05.2016
- *
- */
-/**
- * @author Florian
  *
  */
 public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
@@ -599,10 +595,7 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 			int nrRegions = rep.countNrStepAttributes(id_step, "regionsName");
 
 			for (int i = 0; i < nrRegions; i++) {
-				RegionStore temp = new RegionStore("", 0.0, 0l);
-				temp.setName(rep.getStepAttributeString(id_step, i, "regionsName"));
-				temp.setSampling(Double.parseDouble(rep.getStepAttributeString(id_step, i, "regionsSampling")));
-				temp.setPopulation(Long.parseLong(rep.getStepAttributeString(id_step, i, "regionsPopulation")));
+				RegionStore temp = new RegionStore(rep,id_step,i);
 				this.regions.put(temp.getName(), temp);
 			}
 
@@ -712,10 +705,7 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 			int i = 0;
 			for (String regionNames : tempRegions) {
 				if (this.regions.get(regionNames) != null) {
-					RegionStore temp = this.regions.get(regionNames);
-					rep.saveStepAttribute(id_transformation, id_step, i, "regionsName", temp.getName());
-					rep.saveStepAttribute(id_transformation, id_step, i, "regionsSampling", temp.getSampling());
-					rep.saveStepAttribute(id_transformation, id_step, i, "regionsPopulation", temp.getPopulation());
+					this.regions.get(regionNames).saveRep(rep, id_transformation, id_step, i);;
 					i++;
 				}
 			}

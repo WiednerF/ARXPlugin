@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.attribut.ARXFields;
+import org.deidentifier.arx.kettle.meta.ARXFields;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;

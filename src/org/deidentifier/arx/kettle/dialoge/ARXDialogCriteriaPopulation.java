@@ -4,7 +4,7 @@ import org.deidentifier.arx.ARXPopulationModel;
 import org.deidentifier.arx.ARXPopulationModel.Region;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
-import org.deidentifier.arx.kettle.attribut.RegionStore;
+import org.deidentifier.arx.kettle.meta.RegionStore;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
