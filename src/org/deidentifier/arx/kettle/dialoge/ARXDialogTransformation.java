@@ -2,10 +2,14 @@ package org.deidentifier.arx.kettle.dialoge;
 
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
+import org.deidentifier.arx.kettle.define.ViewTransformationSettings;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.pentaho.di.core.Props;
@@ -45,6 +49,11 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 		 wTabFolder = new CTabFolder( parent,SWT.BORDER );
 	      props.setLook( wTabFolder, Props.WIDGET_STYLE_TAB );
 	      wTabFolder.setSimple( false );
+	      wTabFolder.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent arg0) {
+				composites[wTabFolder.getSelectionIndex()].getData();
+			} 
+	      });
 	      
 	      
 	      cTabGeneral = new CTabItem( wTabFolder, SWT.NONE );
@@ -53,7 +62,7 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	      Composite cTabGeneralComp = new Composite( this.wTabFolder, SWT.NONE );
 	      props.setLook(  cTabGeneralComp );
 	      cTabGeneralComp.setLayout(new FillLayout());
-	      this.composites[0]=new ARXDialogTransformationGeneral(cTabGeneralComp, meta, props, lsMod);
+	      this.composites[0]=new ViewTransformationSettings(cTabGeneralComp, meta);
 	      cTabGeneralComp.layout();
 	      cTabGeneral.setControl( cTabGeneralComp );
 	      
