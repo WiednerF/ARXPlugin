@@ -1,4 +1,4 @@
-package org.deidentifier.arx.kettle.dialoge;
+package org.deidentifier.arx.gui.view;
 
 
 import org.deidentifier.arx.ARXConfiguration;
@@ -7,8 +7,6 @@ import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
-import org.deidentifier.arx.gui.view.LayoutRisks;
-import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
 import org.eclipse.swt.SWT;
