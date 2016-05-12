@@ -603,33 +603,7 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 			int nrFields = rep.countNrStepAttributes(id_step, "fieldsName");
 
 			for (int i = 0; i < nrFields; i++) {
-				ARXFields temp = new ARXFields(rep.getStepAttributeString(id_step, i, "fieldsName"));
-				temp.setType(rep.getStepAttributeString(id_step, i, "fieldsType"));
-				temp.setHierarchie(rep.getStepAttributeString(id_step, i, "fieldsHierarchie"));
-				temp.setFunctionMicro(rep.getStepAttributeString(id_step, i, "fieldsFunctionMicro"));
-				temp.setAttributeWeight(
-						Double.parseDouble(rep.getStepAttributeString(id_step, i, "fieldsAttributeWeight")));
-				temp.setlDiversityC(Double.parseDouble(rep.getStepAttributeString(id_step, i, "fieldsLDiversityC")));
-				temp.settCloseness(Double.parseDouble(rep.getStepAttributeString(id_step, i, "fieldsTCloseness")));
-				temp.setMissingDataMicro(
-						Boolean.parseBoolean(rep.getStepAttributeString(id_step, i, "fieldsMissingDataMicro")));
-				temp.setlDiversityEnable(
-						Boolean.parseBoolean(rep.getStepAttributeString(id_step, i, "fieldsLDiversityEnable")));
-				temp.settClosenessEnable(
-						Boolean.parseBoolean(rep.getStepAttributeString(id_step, i, "fieldsTClosenessEnable")));
-				temp.setdDisclosureEnable(
-						Boolean.parseBoolean(rep.getStepAttributeString(id_step, i, "fieldsDDisclosureEnable")));
-				temp.setTransformation(
-						Integer.parseInt(rep.getStepAttributeString(id_step, i, "fieldsTransformation")));
-				temp.setMinimumGen(Integer.parseInt(rep.getStepAttributeString(id_step, i, "fieldsMinimumGen")));
-				temp.setMaximumGen(Integer.parseInt(rep.getStepAttributeString(id_step, i, "fieldsMaximumGen")));
-				temp.setlDiversity(Integer.parseInt(rep.getStepAttributeString(id_step, i, "fieldsLDiversity")));
-				temp.setlDiversityVariant(
-						Integer.parseInt(rep.getStepAttributeString(id_step, i, "fieldsLDiversityVariant")));
-				temp.settClosenessMeasure(
-						Integer.parseInt(rep.getStepAttributeString(id_step, i, "fieldsTClosenessMeasure")));
-				temp.setdDisclosure(Double.parseDouble(rep.getStepAttributeString(id_step, i, "fieldsDDisclosure")));
-
+				ARXFields temp = new ARXFields(rep,id_step,i);
 				this.fields.put(temp.getName(), temp);
 			}
 
@@ -716,34 +690,8 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 			for (String fieldsNames : tempFields) {
 				if (this.fields.get(fieldsNames) != null) {
 					ARXFields temp = this.fields.get(fieldsNames);
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsName", temp.getName());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsTransformation",
-							temp.getTransformation());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsMinimumGen", temp.getMinimumGen());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsMaximumGen", temp.getMaximumGen());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsFunctionMicro",
-							temp.getFunctionMicro());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsHierarchie", temp.getHierarchie());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsAttributeWeight",
-							temp.getAttributeWeight());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsLDiversity", temp.getlDiversity());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsLDiversityVariant",
-							temp.getlDiversityVariant());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsLDiversityC", temp.getlDiversityC());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsTCloseness", temp.gettCloseness());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsTClosenessMeasure",
-							temp.gettClosenessMeasure());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsDDisclosure", temp.getdDisclosure());
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsMissingDataMicro",
-							(temp.isMissingDataMicro() ? "true" : "false"));
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsLDiversityEnable",
-							(temp.islDiversityEnable() ? "true" : "false"));
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsTClosenessEnable",
-							(temp.istClosenessEnable() ? "true" : "false"));
-					rep.saveStepAttribute(id_transformation, id_step, x, "fieldsDDisclosureEnable",
-							(temp.isdDisclosureEnable() ? "true" : "false"));
-
-					i++;
+					temp.saveRep(rep, id_transformation, id_step, x);
+					x++;
 				}
 			}
 		} catch (Exception e) {
