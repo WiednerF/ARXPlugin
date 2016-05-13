@@ -3,8 +3,8 @@ package org.deidentifier.arx.kettle.dialoge;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
 import org.deidentifier.arx.kettle.define.ViewUtilityMeasures;
+import org.deidentifier.arx.kettle.define.ViewCodingModel;
 import org.deidentifier.arx.kettle.define.ViewTransformationSettings;
-import org.deidentifier.arx.metric.Metric;
 import org.deidentifier.arx.metric.MetricDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -12,7 +12,6 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.pentaho.di.core.Props;
@@ -29,7 +28,7 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	final ModifyListener lsMod;	
 	private ARXPluginDialogInterface[] composites;
 	
-	public ARXDialogTransformationCoding coding;
+	public ViewCodingModel coding;
 	public ARXDialogTransformationAttributWeight attributeWeight;
 	private CTabFolder wTabFolder;
 	
@@ -63,7 +62,6 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	      cTabGeneral = new CTabItem( wTabFolder, SWT.NONE );
 	      cTabGeneral.setText( Messages.getString( "ARXPluginDialog.transformation.general.title" ) );
 	     
-	      
 	      Composite cTabGeneralComp = new Composite( this.wTabFolder, SWT.NONE );
 	      props.setLook(  cTabGeneralComp );
 	      cTabGeneralComp.setLayout(new FillLayout());
@@ -80,8 +78,59 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	      this.composites[1]=new ViewUtilityMeasures(this,cTabUtilityComp, meta);
 	      cTabUtilityComp.layout();
 	      cTabUtility.setControl( cTabUtilityComp );
+      
+	      wTabFolder.setSelection(0);
+	      wTabFolder.setLayoutData( ARXDialogGeneralTab.createFillHorizontallyGridData() );
 	      
-	      this.cTabAttributeWeights = new CTabItem( wTabFolder, SWT.NONE );
+	      
+	      
+	}
+	
+	public void changeMetric(MetricDescription description){
+		
+		  if(description.isConfigurableCodingModelSupported()){
+			  this.showSettingsCodingModel();
+	        }else{
+	        	this.hideSettingsCodingModel();
+	        }
+	        
+	        if(description.isAttributeWeightsSupported()){
+	        	this.showSettingsAttributeWeights();
+	        }else{
+	        	this.hideSettingsAttributeWeights();
+	        }
+		this.parent.redraw();
+	}
+	
+	 /**
+     * Hides the settings for the attribute weights.
+     */
+    private void hideSettingsAttributeWeights(){
+
+        if (this.cTabAttributeWeights != null) {
+            this.cTabAttributeWeights.dispose();
+            this.cTabAttributeWeights = null;
+            this.attributeWeight=null;
+        }
+    }
+
+    /**
+     * Hides the settings for the coding model.
+     */
+    private void hideSettingsCodingModel(){
+        if (this.cTabCodingModel != null) {
+            this.cTabCodingModel.dispose();
+            this.cTabCodingModel = null;
+            this.cTabCodingModel=null;
+        }
+    }
+
+    /**
+     * Shows the settings for the attribute weights.
+     */
+    private void showSettingsAttributeWeights(){
+        if (this.cTabAttributeWeights != null) return;
+          this.cTabAttributeWeights = new CTabItem( wTabFolder, SWT.NONE );
 	      this.cTabAttributeWeights.setText( Messages.getString( "ARXPluginDialog.transformation.attribut.title" ) );
 	      
 	      Composite cTabAttributeWeightsComp = new Composite( this.wTabFolder, SWT.NONE );
@@ -92,51 +141,35 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	      this.attributeWeight=(ARXDialogTransformationAttributWeight) this.composites[2];
 	      cTabAttributeWeightsComp.layout();
 	      cTabAttributeWeights.setControl( cTabAttributeWeightsComp );
-	      
-	      this.cTabCodingModel = new CTabItem( wTabFolder, SWT.NONE );
+    }
+
+    /**
+     * Shows the settings for the coding model.
+     */
+    private void showSettingsCodingModel(){
+        if (this.cTabCodingModel != null) return;
+        this.cTabCodingModel = new CTabItem( wTabFolder, SWT.NONE );
 	      this.cTabCodingModel.setText( Messages.getString( "ARXPluginDialog.transformation.coding.title" ) );
 	      
 	      Composite cTabCodingModelComp = new Composite( this.wTabFolder, SWT.NONE );
 	      props.setLook(  cTabCodingModelComp );
 	      cTabCodingModelComp.setLayout(new FillLayout());
-	      this.composites[3]=new ARXDialogTransformationCoding(cTabCodingModelComp, meta, props, lsMod);
-	      this.coding=(ARXDialogTransformationCoding)this.composites[3];
+	      this.composites[3]=new ViewCodingModel(cTabCodingModelComp, meta);
+	      this.coding=(ViewCodingModel)this.composites[3];
 	      cTabCodingModelComp.layout();
 	      cTabCodingModel.setControl( cTabCodingModelComp );
-	      
-	      wTabFolder.setSelection(0);
-	      wTabFolder.setLayoutData( ARXDialogGeneralTab.createFillHorizontallyGridData() );
-	      
-	      
-	      
-	}
-	
-	public void changeMetric(MetricDescription description){
-		if(coding!=null&&attributeWeight!=null){
-		  if(description.isConfigurableCodingModelSupported()){
-	        	coding.slider.setEnabled(true);
-	        }else{
-	        	coding.slider.setEnabled(false);
-	        }
-	        
-	        if(description.isAttributeWeightsSupported()){
-	        	attributeWeight.setEnabled(true);
-	        }else{
-	        	attributeWeight.setEnabled(false);
-	        }
-		}
-	}
+    }
 
 	public void getData() {
 		for(ARXPluginDialogInterface composite:this.composites){
-			composite.getData();
+			if(composite!=null) composite.getData();
 		}
 
 	}
 
 	public void saveData() {
 		for(ARXPluginDialogInterface composite:this.composites){
-			composite.saveData();
+			if(composite!=null) composite.saveData();
 		}
 	}
 
