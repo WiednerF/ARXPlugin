@@ -3,6 +3,7 @@ package org.deidentifier.arx.kettle.dialoge;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
 import org.deidentifier.arx.kettle.define.ViewUtilityMeasures;
+import org.deidentifier.arx.kettle.define.ViewAttributeWeights;
 import org.deidentifier.arx.kettle.define.ViewCodingModel;
 import org.deidentifier.arx.kettle.define.ViewTransformationSettings;
 import org.deidentifier.arx.metric.MetricDescription;
@@ -29,7 +30,7 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	private ARXPluginDialogInterface[] composites;
 	
 	public ViewCodingModel coding;
-	public ARXDialogTransformationAttributWeight attributeWeight;
+	public ViewAttributeWeights attributeWeight;
 	private CTabFolder wTabFolder;
 	
 	private CTabItem cTabGeneral,cTabUtility,cTabAttributeWeights,cTabCodingModel;
@@ -129,7 +130,8 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
      * Shows the settings for the attribute weights.
      */
     private void showSettingsAttributeWeights(){
-        if (this.cTabAttributeWeights != null) return;
+        if (this.cTabAttributeWeights != null&&!this.attributeWeight.quasiIdentifierChanged()) return;
+        if(this.cTabAttributeWeights !=null) this.hideSettingsAttributeWeights();
           this.cTabAttributeWeights = new CTabItem( wTabFolder, SWT.NONE );
 	      this.cTabAttributeWeights.setText( Messages.getString( "ARXPluginDialog.transformation.attribut.title" ) );
 	      
@@ -137,8 +139,8 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	      props.setLook(  cTabAttributeWeightsComp );
 	      cTabAttributeWeightsComp.setLayout(new FillLayout());
 	      cTabAttributeWeightsComp.setEnabled(true);
-	      this.composites[2]=new ARXDialogTransformationAttributWeight(cTabAttributeWeightsComp,meta, props, lsMod,fieldNames);
-	      this.attributeWeight=(ARXDialogTransformationAttributWeight) this.composites[2];
+	      this.composites[2]=new ViewAttributeWeights(cTabAttributeWeightsComp,meta,fieldNames);
+	      this.attributeWeight=(ViewAttributeWeights) this.composites[2];
 	      cTabAttributeWeightsComp.layout();
 	      cTabAttributeWeights.setControl( cTabAttributeWeightsComp );
     }
@@ -163,6 +165,10 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	public void getData() {
 		for(ARXPluginDialogInterface composite:this.composites){
 			if(composite!=null) composite.getData();
+		}
+		if(this.attributeWeight.quasiIdentifierChanged()){
+			this.hideSettingsAttributeWeights();
+			this.showSettingsAttributeWeights();
 		}
 
 	}

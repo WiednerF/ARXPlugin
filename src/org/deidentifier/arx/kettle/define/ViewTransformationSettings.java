@@ -31,6 +31,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 
+/**
+ * This Class contains the Normal Tranformation Settings
+ * @author Florian Wiedner
+ * @since 1.7
+ *
+ */
 public class ViewTransformationSettings implements ARXPluginDialogInterface {
 	/** Static settings. */
     private static final int      LABEL_WIDTH  = 50;
