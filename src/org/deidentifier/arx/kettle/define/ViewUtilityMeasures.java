@@ -1,16 +1,34 @@
-package org.deidentifier.arx.kettle.dialoge;
+/*
+ * Plugin for Kettle with ARX: Powerful Data Anonymization
+ * Copyright 2016 Florian Wiedner and contributors
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.deidentifier.arx.kettle.define;
 
 import java.util.List;
 
+import org.deidentifier.arx.gui.resources.Resources;
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.Messages;
+import org.deidentifier.arx.kettle.dialoge.ARXDialogTransformation;
+import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.metric.Metric;
 import org.deidentifier.arx.metric.Metric.AggregateFunction;
 import org.deidentifier.arx.metric.MetricDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -18,9 +36,14 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.pentaho.di.ui.core.PropsUI;
 
-public class ARXDialogTransformationUtility implements ARXPluginDialogInterface {
+/**
+ * Represents the ViewModel for the Utility Measure Tab and Saving of the Data
+ * @author Florian Wiedner
+ * @category ARXDialogTransformation
+ * @since 1.7
+ */
+public class ViewUtilityMeasures implements ARXPluginDialogInterface {
 
 
     /** Static settings. */
@@ -32,23 +55,6 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
     /** Static settings. */
     private static final String[]                LABELS       = getLabels(METRICS);
     
-    
-    /** View. */
-    private Combo                 comboMetric;
-    
-    /** View. */
-    private Composite             root;
-    
-    /** View. */
-    private Button                monotonicVariant;
-
-    /** View. */
-    private Button                utilityBasedMicroaggregation;
-    
-    /** View. */
-    private Combo                 comboAggregate;
-
-
     /**
      * Returns a list of names of all available metrics.
      *
@@ -62,32 +68,57 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
         }
         return labels;
     }
+    
+    
+    /** View. */
+    private Combo                 comboMetric;
+    
+    /** View. */
+    private Button                monotonicVariant;
+
+    /** View. */
+    private Button                utilityBasedMicroaggregation;
+    
+    /** View. */
+    private Combo                 comboAggregate;
+    
+    /**
+     * The Meta Information for getting and saving of Data
+     */
+	private final ARXPluginMeta meta;
 	
-    final Composite parent;
+	/**
+	 * The Transformation Overview Class for Changing AttributWeight and CodingModel
+	 */
+	private final ARXDialogTransformation trans;
 	
-	final ARXPluginMeta meta;
-	
-	final PropsUI props;
-	
-	final ModifyListener lsMod;
-	final ARXDialogTransformation trans;
-	
-	public ARXDialogTransformationUtility(ARXDialogTransformation trans,final Composite parent,ARXPluginMeta meta, final PropsUI props, ModifyListener lsMod) {
-		this.parent=parent;
+	/**
+	 * Creates a new Tab and add it to the Composite parent
+	 * @param trans The Transformation View (Parent)
+	 * @param parent The Parent Composite
+	 * @param meta The Meta Informations for the Project
+	 */
+	public ViewUtilityMeasures(final ARXDialogTransformation trans,final Composite parent,final ARXPluginMeta meta) {
 		this.meta=meta;
-		this.props=props;
-		this.lsMod = lsMod;
 		this.trans=trans;
-		this.build();
+		this.build(parent);
+		this.getData();
 	}
 	
-	public void build(){
+	/**
+	 * Builds the new Tab with the Data and Enable Saving
+	 * @param parent The Parent Composite for adding to the Overall view
+	 * @author Florian Wiedner
+	 * @since 1.7
+	 * @category ViewUtilityMeasure
+	 */
+	private void build(final Composite parent){
 		final Composite mBase = new Composite(parent, SWT.NONE);
         mBase.setLayout(GridLayoutFactory.swtDefaults().numColumns(4).create());
 
         // Create metric combo
         final Label mLabel = new Label(mBase, SWT.PUSH);
-        mLabel.setText(Messages.getString("ARXPluginDialog.transformation.utility.measure")); //$NON-NLS-1$
+        mLabel.setText(Resources.getMessage("CriterionDefinitionView.32")); //$NON-NLS-1$
         GridData d2 = new GridData();
         d2.heightHint = LABEL_HEIGHT;
         d2.minimumHeight = LABEL_HEIGHT;
@@ -96,7 +127,7 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
         mLabel.setLayoutData(d2);
 
         comboMetric = new Combo(mBase, SWT.READ_ONLY);
-        GridData d30 = ARXDialogGeneralTab.createFillHorizontallyGridData();
+        GridData d30 = SWTUtil.createFillHorizontallyGridData();
         d30.horizontalSpan = 3;
         d30.verticalAlignment = GridData.CENTER;
         d30.grabExcessVerticalSpace = true;
@@ -106,14 +137,15 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
         comboMetric.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent arg0) {
-            	updateControls();
+        		meta.setMetric(comboMetric.getItem(comboMetric.getSelectionIndex()));
                 meta.setChanged(true);
+                getData();
             }
         });
 
         // Create monotonicity button
         final Label mLabel2 = new Label(mBase, SWT.PUSH);
-        mLabel2.setText(Messages.getString("ARXPluginDialog.transformation.utility.monotonicity")); //$NON-NLS-1$
+        mLabel2.setText(Resources.getMessage("CriterionDefinitionView.67")); //$NON-NLS-1$
         GridData d22 = new GridData();
         d22.heightHint = LABEL_HEIGHT;
         d22.minimumHeight = LABEL_HEIGHT;
@@ -122,20 +154,24 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
         mLabel2.setLayoutData(d22);
 
         monotonicVariant = new Button(mBase, SWT.CHECK);
-        monotonicVariant.setText(Messages.getString("ARXPluginDialog.transformation.utility.monotonicity.2")); //$NON-NLS-1$
+        monotonicVariant.setText(Resources.getMessage("CriterionDefinitionView.68")); //$NON-NLS-1$
         monotonicVariant.setSelection(false);
         monotonicVariant.setEnabled(true);
         monotonicVariant.setLayoutData(GridDataFactory.swtDefaults().span(3, 1).grab(false, true).align(GridData.BEGINNING, GridData.CENTER).create());
         monotonicVariant.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent arg0) {
+            	MetricDescription description = METRICS.get(comboMetric.getSelectionIndex());
+        		if (description.isMonotonicVariantSupported()) {
+        			meta.setMonotonicVariant(monotonicVariant.getSelection());
+        		}
                 meta.setChanged(true);
             }
         });
 
         // Create microaggreation button
         final Label mLabel4 = new Label(mBase, SWT.PUSH);
-        mLabel4.setText(Messages.getString("ARXPluginDialog.transformation.utility.microaggregation")); //$NON-NLS-1$
+        mLabel4.setText(Resources.getMessage("CriterionDefinitionView.90")); //$NON-NLS-1$
         GridData d24 = new GridData();
         d24.heightHint = LABEL_HEIGHT;
         d24.minimumHeight = LABEL_HEIGHT;
@@ -144,20 +180,21 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
         mLabel4.setLayoutData(d24);
 
         utilityBasedMicroaggregation = new Button(mBase, SWT.CHECK);
-        utilityBasedMicroaggregation.setText(Messages.getString("ARXPluginDialog.transformation.utility.microaggregation.2")); //$NON-NLS-1$
+        utilityBasedMicroaggregation.setText(Resources.getMessage("CriterionDefinitionView.91")); //$NON-NLS-1$
         utilityBasedMicroaggregation.setSelection(false);
         utilityBasedMicroaggregation.setEnabled(true);
         utilityBasedMicroaggregation.setLayoutData(GridDataFactory.swtDefaults().span(3, 1).grab(false, true).align(GridData.BEGINNING, GridData.CENTER).create());
         utilityBasedMicroaggregation.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent arg0) {
+        		meta.setMicroaggregation(utilityBasedMicroaggregation.getSelection());
                 meta.setChanged(true);
             }
         });
 
         // Create monotonicity button
         final Label mLabel3 = new Label(mBase, SWT.PUSH);
-        mLabel3.setText(Messages.getString("ARXPluginDialog.transformation.utility.aggregate")); //$NON-NLS-1$
+        mLabel3.setText(Resources.getMessage("CriterionDefinitionView.72")); //$NON-NLS-1$
         GridData d23 = new GridData();
         d23.heightHint = LABEL_HEIGHT;
         d23.minimumHeight = LABEL_HEIGHT;
@@ -166,7 +203,7 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
         mLabel3.setLayoutData(d23);
 
         comboAggregate = new Combo(mBase, SWT.READ_ONLY);
-        GridData d31 = ARXDialogGeneralTab.createFillHorizontallyGridData();
+        GridData d31 = SWTUtil.createFillHorizontallyGridData();
         d31.horizontalSpan = 3;
         d31.grabExcessVerticalSpace = true;
         d31.verticalAlignment = GridData.CENTER;
@@ -175,11 +212,18 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
         comboAggregate.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent arg0) {
+            	if(comboAggregate.getItemCount()!=1){
+        			meta.setAggregation(comboAggregate.getItem(comboAggregate.getSelectionIndex()));
+        		}
                meta.setChanged(true);
             }
         });
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface#getData()
+	 */
 	public void getData() {
 		if(meta.getMetric()!=null){
 			this.comboMetric.select(this.comboMetric.indexOf(meta.getMetric()));
@@ -193,20 +237,15 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
 	}
 
 	public void saveData() {
-		MetricDescription description = METRICS.get(this.comboMetric.getSelectionIndex());
-		this.meta.setMetric(this.comboMetric.getItem(this.comboMetric.getSelectionIndex()));
-		if (description.isMonotonicVariantSupported()) {
-			this.meta.setMonotonicVariant(this.monotonicVariant.getSelection());
-		}
-		this.meta.setMicroaggregation(this.utilityBasedMicroaggregation.getSelection());
-		if(comboAggregate.getItemCount()!=1){
-			this.meta.setAggregation(this.comboAggregate.getItem(this.comboAggregate.getSelectionIndex()));
-		}
+		//TODO Delete
 	}
 	
 	/**
-     * This method updates the view
-     */
+	 * This Methode updates the view with the new Metric Model
+	 * @author Florian Wiedner
+	 * @since 1.7
+	 * @category ViewUtilityMeasure
+	 */
     private void updateControls(){
         MetricDescription description = METRICS.get(this.comboMetric.getSelectionIndex());
         // Monotonicity
@@ -236,23 +275,14 @@ public class ARXDialogTransformationUtility implements ARXPluginDialogInterface 
         } 
 
         if (comboAggregate.getItemCount() == 0) {
-            comboAggregate.add(Messages.getString("ARXPluginDialog.transformation.utility.none")); //$NON-NLS-1$
+            comboAggregate.add(Resources.getMessage("ViewMetric.0")); //$NON-NLS-1$
             comboAggregate.select(0);
             comboAggregate.setEnabled(false);
         }else{
         	comboAggregate.setEnabled(true);
         }
-        if(description.isConfigurableCodingModelSupported()){
-        	this.trans.coding.slider.setEnabled(true);
-        }else{
-        	this.trans.coding.slider.setEnabled(false);
-        }
-        
-        if(description.isAttributeWeightsSupported()){
-        	this.trans.attributeWeight.setEnabled(true);
-        }else{
-        	this.trans.attributeWeight.setEnabled(false);
-        }
+        //Updating Metric for AttributeWeight and CodingModel
+        this.trans.changeMetric(description);
     }
 
 }

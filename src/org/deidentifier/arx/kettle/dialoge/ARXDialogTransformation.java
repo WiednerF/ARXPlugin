@@ -2,7 +2,10 @@ package org.deidentifier.arx.kettle.dialoge;
 
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
+import org.deidentifier.arx.kettle.define.ViewUtilityMeasures;
 import org.deidentifier.arx.kettle.define.ViewTransformationSettings;
+import org.deidentifier.arx.metric.Metric;
+import org.deidentifier.arx.metric.MetricDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -56,8 +59,10 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	      });
 	      
 	      
+	      
 	      cTabGeneral = new CTabItem( wTabFolder, SWT.NONE );
 	      cTabGeneral.setText( Messages.getString( "ARXPluginDialog.transformation.general.title" ) );
+	     
 	      
 	      Composite cTabGeneralComp = new Composite( this.wTabFolder, SWT.NONE );
 	      props.setLook(  cTabGeneralComp );
@@ -72,7 +77,7 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	      Composite cTabUtilityComp = new Composite( this.wTabFolder, SWT.NONE );
 	      props.setLook(  cTabUtilityComp );
 	      cTabUtilityComp.setLayout(new FillLayout());
-	      this.composites[1]=new ARXDialogTransformationUtility(this,cTabUtilityComp, meta, props, lsMod);
+	      this.composites[1]=new ViewUtilityMeasures(this,cTabUtilityComp, meta);
 	      cTabUtilityComp.layout();
 	      cTabUtility.setControl( cTabUtilityComp );
 	      
@@ -104,6 +109,22 @@ public class ARXDialogTransformation implements ARXPluginDialogInterface {
 	      
 	      
 	      
+	}
+	
+	public void changeMetric(MetricDescription description){
+		if(coding!=null&&attributeWeight!=null){
+		  if(description.isConfigurableCodingModelSupported()){
+	        	coding.slider.setEnabled(true);
+	        }else{
+	        	coding.slider.setEnabled(false);
+	        }
+	        
+	        if(description.isAttributeWeightsSupported()){
+	        	attributeWeight.setEnabled(true);
+	        }else{
+	        	attributeWeight.setEnabled(false);
+	        }
+		}
 	}
 
 	public void getData() {
