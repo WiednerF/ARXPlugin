@@ -2,6 +2,7 @@ package org.deidentifier.arx.kettle;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,14 +39,7 @@ import org.deidentifier.arx.metric.Metric;
 import org.deidentifier.arx.metric.Metric.AggregateFunction;
 import org.deidentifier.arx.metric.MetricDescription;
 import org.deidentifier.arx.risk.RiskModelPopulationUniqueness.PopulationUniquenessModel;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
-
 public class ARXPluginProcess {
 	
 	private List<String[]> rowList;
@@ -181,7 +175,7 @@ public class ARXPluginProcess {
         			 if(field.gettClosenessMeasure()==0){
         				 config.addCriterion(new EqualDistanceTCloseness(field.getName(),field.gettCloseness()));
         			 }else if(field.getHierarchie()!=""){
-        				 config.addCriterion(new HierarchicalDistanceTCloseness(field.getName(),field.gettCloseness(),Hierarchy.create(field.getHierarchie(),';')));
+        				 config.addCriterion(new HierarchicalDistanceTCloseness(field.getName(),field.gettCloseness(),Hierarchy.create(field.getHierarchie(),Charset.defaultCharset(),';')));
         			 }
         		 }
         	}else if(field.getType().equals("Quasi-identifying")){
@@ -191,8 +185,8 @@ public class ARXPluginProcess {
                 }
                 if(field.getHierarchie()!=""&&field.getHierarchie()!=null){
             		File file = new File(field.getHierarchie());
-            		if(file.exists()&&file.isFile()){
-            			data.getDefinition().setAttributeType(field.getName(), Hierarchy.create(field.getHierarchie(),';'));
+            		if(file.exists()&&file.isFile()){	
+            			data.getDefinition().setAttributeType(field.getName(), Hierarchy.create(field.getHierarchie(),Charset.defaultCharset(),';'));
             		}
             	}
         	}else if(field.getType().equals("Identifying")){
