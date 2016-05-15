@@ -2,6 +2,7 @@ package org.deidentifier.arx.kettle.dialoge;
 
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
+import org.deidentifier.arx.kettle.define.ViewPopulationModel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -63,7 +64,7 @@ public class ARXDialogCriteria implements ARXPluginDialogInterface {
 	      Composite cTabPopulationComp = new Composite( this.wTabFolder, SWT.NONE );
 	      props.setLook(  cTabPopulationComp );
 	      cTabPopulationComp.setLayout(new FillLayout());
-	      this.composites[1]=new ARXDialogCriteriaPopulation(cTabPopulationComp,meta,props,lsMod);
+	      this.composites[1]=new ViewPopulationModel(cTabPopulationComp,meta);
 	      cTabPopulationComp.layout();
 	      cTabPopulation.setControl( cTabPopulationComp );
 
