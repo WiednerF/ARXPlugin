@@ -21,7 +21,6 @@ import java.util.List;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXDialogTransformation;
 import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.metric.Metric;
 import org.deidentifier.arx.metric.Metric.AggregateFunction;
@@ -40,7 +39,7 @@ import org.eclipse.swt.widgets.Label;
 /**
  * Represents the ViewModel for the Utility Measure Tab and Saving of the Data
  * @author Florian Wiedner
- * @category ARXDialogTransformation
+ * @category LayoutTransformationModel
  * @since 1.7
  */
 public class ViewUtilityMeasures implements ARXPluginDialogInterface {
@@ -90,7 +89,7 @@ public class ViewUtilityMeasures implements ARXPluginDialogInterface {
 	/**
 	 * The Transformation Overview Class for Changing AttributWeight and CodingModel
 	 */
-	private final ARXDialogTransformation trans;
+	private final LayoutTransformationModel trans;
 	
 	/**
 	 * Creates a new Tab and add it to the Composite parent
@@ -98,7 +97,7 @@ public class ViewUtilityMeasures implements ARXPluginDialogInterface {
 	 * @param parent The Parent Composite
 	 * @param meta The Meta Informations for the Project
 	 */
-	public ViewUtilityMeasures(final ARXDialogTransformation trans,final Composite parent,final ARXPluginMeta meta) {
+	public ViewUtilityMeasures(final LayoutTransformationModel trans,final Composite parent,final ARXPluginMeta meta) {
 		this.meta=meta;
 		this.trans=trans;
 		this.build(parent);

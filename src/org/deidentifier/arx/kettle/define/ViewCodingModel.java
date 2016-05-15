@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * The Class contains the View for the GUI of the Coding Model in the Transformation
  * @author Florian Wiedner
- * @category ARXDialogTransformation
+ * @category LayoutTransformationModel
  * @since 1.7
  *
  */

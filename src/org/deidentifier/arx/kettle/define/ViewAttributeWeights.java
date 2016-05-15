@@ -38,7 +38,7 @@ import de.linearbits.swt.widgets.KnobRange;
  * This Class Generates the View for the Attribute Weights and the Transformation
  * @author Florian Wiedner
  * @since 1.7
- * @category ARXDialogTransformation
+ * @category LayoutTransformationModel
  * @version 1.0
  *
  */
