@@ -12,6 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellAdapter;
@@ -143,6 +144,11 @@ public class ARXPluginDialog extends org.pentaho.di.ui.trans.step.BaseStepDialog
 		      wTabFolder = new CTabFolder( shell,SWT.BORDER );
 		      props.setLook( wTabFolder, Props.WIDGET_STYLE_TAB );
 		      wTabFolder.setSimple( false );
+		      wTabFolder.addSelectionListener(new SelectionAdapter(){
+					public void widgetSelected(SelectionEvent arg0) {
+						composites[wTabFolder.getSelectionIndex()].getData();
+					} 
+			      });
 		  		      
 		      
 		     this.composites[0]=new ARXDialogGeneralTab(wTabFolder,input,props,fieldNames);

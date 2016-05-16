@@ -66,7 +66,7 @@ public class ARXDialogGeneralTab implements ARXPluginDialogInterface {
 	        
 	        
 	        this.composites[0]=new LayoutTransformationModel(compositeBottomRight,this.meta,this.props,this.fieldNames);
-	        this.composites[1]=new LayoutCriteria(compositeCenterRight,this.meta,this.props);
+	        this.composites[1]=new LayoutCriteria(compositeCenterRight,this.meta,this.props,this.fieldNames);
 	     
 	      FormData tabGeneralFileComp = new FormData();
 	      tabGeneralFileComp.left = new FormAttachment( 0, 0 );

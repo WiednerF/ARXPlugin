@@ -81,14 +81,23 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 	private final Image symbolR = Resources.getImage("symbol_r.png"); //$NON-NLS-1$
 	/** Images **/
 	private final Image symbolDP = Resources.getImage("symbol_dp.png"); //$NON-NLS-1$
+	/**
+	 * The FieldNames from the Previous Step
+	 */
+	private String[] fieldNames;
+	/**
+	 * If you have Sensitive Data or not
+	 */
+	private boolean sensitive=false;
 
 	/**
 	 * Creates the New Privacy Criteria View
 	 * @param parent The Composite Parent
 	 * @param meta The Meta Data Information
 	 */
-	public ViewCriteriaList(final Composite parent, ARXPluginMeta meta) {
+	public ViewCriteriaList(final Composite parent, ARXPluginMeta meta,String[] fieldNames) {
 		this.meta = meta;
+		this.fieldNames=fieldNames;
 
 		this.defaultColorProfile = KnobColorProfile.createDefaultSystemProfile(parent.getDisplay());
 		this.focusedColorProfile = KnobColorProfile.createFocusedBlueRedProfile(parent.getDisplay());
@@ -133,7 +142,7 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 					comboPopulationUniqueness.setEnabled(false);
 					if (!buttonPopulationUniqueness.getSelection() && !buttonSampleUniqueness.getSelection()
 							&& !buttonReidentification.getSelection() && !buttonKMap.getSelection()
-							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()) {
+							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()&&!sensitive) {
 						knobPopulationUniqueness.setEnabled(true);
 						labelPopulationUniqueness.setEnabled(true);
 						comboPopulationUniqueness.setEnabled(true);
@@ -207,7 +216,7 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 
 					if (!buttonPopulationUniqueness.getSelection() && !buttonSampleUniqueness.getSelection()
 							&& !buttonReidentification.getSelection() && !buttonKMap.getSelection()
-							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()) {
+							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()&&!sensitive) {
 						knobSampleUniqueness.setEnabled(true);
 						labelSampleUniqueness.setEnabled(true);
 						buttonSampleUniqueness.setSelection(true);
@@ -262,7 +271,7 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 
 					if (!buttonPopulationUniqueness.getSelection() && !buttonSampleUniqueness.getSelection()
 							&& !buttonReidentification.getSelection() && !buttonKMap.getSelection()
-							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()) {
+							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()&&!sensitive) {
 						knobReidentification.setEnabled(true);
 						labelReidentification.setEnabled(true);
 						buttonReidentification.setSelection(true);
@@ -327,7 +336,7 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 					labelSignificanceLevelKMap.setEnabled(false);
 					if (!buttonPopulationUniqueness.getSelection() && !buttonSampleUniqueness.getSelection()
 							&& !buttonReidentification.getSelection() && !buttonKMap.getSelection()
-							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()) {
+							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()&&!sensitive) {
 						knobKMap.setEnabled(true);
 						labelKMap.setEnabled(true);
 						cmbModelKMap.setEnabled(true);
@@ -444,7 +453,7 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 					comboDifferentialGeneralization.setEnabled(false);
 					if (!buttonPopulationUniqueness.getSelection() && !buttonSampleUniqueness.getSelection()
 							&& !buttonReidentification.getSelection() && !buttonKMap.getSelection()
-							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()) {
+							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()&&!sensitive) {
 						labelDifferentialEpsilon.setEnabled(true);
 						labelDifferentialDelta.setEnabled(true);
 						knobDifferentialEpsilon.setEnabled(true);
@@ -556,7 +565,7 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 					knobK.setEnabled(false);
 					if (!buttonPopulationUniqueness.getSelection() && !buttonSampleUniqueness.getSelection()
 							&& !buttonReidentification.getSelection() && !buttonKMap.getSelection()
-							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()) {
+							&& !buttonKAnonymity.getSelection() && !buttonDifferential.getSelection()&&!sensitive) {
 						labelKAnonymity.setEnabled(true);
 						knobK.setEnabled(true);
 						buttonKAnonymity.setSelection(true);
@@ -684,7 +693,7 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 			this.comboPopulationUniqueness.setEnabled(false);
 
 		}
-
+		this.sensitive=this.meta.isContainingSensitive(fieldNames);
 	}
 
 	public void saveData() {

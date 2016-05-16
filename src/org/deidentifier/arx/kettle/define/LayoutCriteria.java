@@ -63,6 +63,10 @@ public class LayoutCriteria implements ARXPluginDialogInterface {
 	 * The TabItems for this Folder
 	 */
 	private CTabItem cTabPrivacy,cTabPopulation;
+	/**
+	 * The FieldNames of the Previous Step
+	 */
+	private String[] fieldNames;
 
 	/**
 	 * Creates the View and Sets up this Object
@@ -70,8 +74,9 @@ public class LayoutCriteria implements ARXPluginDialogInterface {
 	 * @param meta The Meta Data of the Project
 	 * @param props The PropsUI from the Kettle Project
 	 */
-	public LayoutCriteria(final Composite parent,final ARXPluginMeta meta, final PropsUI props) {
+	public LayoutCriteria(final Composite parent,final ARXPluginMeta meta, final PropsUI props,String[] fieldNames) {
 		this.meta=meta;
+		this.fieldNames=fieldNames;
 		this.props=props;
 		composites=new ARXPluginDialogInterface[2];
 		this.build(parent);
@@ -103,7 +108,7 @@ public class LayoutCriteria implements ARXPluginDialogInterface {
 	      Composite cTabPrivacyComp = new Composite( this.wTabFolder, SWT.NONE );
 	      props.setLook(  cTabPrivacyComp );
 	      cTabPrivacyComp.setLayout(new FillLayout());
-	      this.composites[0]=new ViewCriteriaList(cTabPrivacyComp,meta);
+	      this.composites[0]=new ViewCriteriaList(cTabPrivacyComp,meta,fieldNames);
 	      cTabPrivacyComp.layout();
 	      cTabPrivacy.setControl( cTabPrivacyComp );
 	      

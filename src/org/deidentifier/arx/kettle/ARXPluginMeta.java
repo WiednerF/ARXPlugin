@@ -1501,6 +1501,24 @@ public class ARXPluginMeta extends BaseStepMeta implements StepMetaInterface {
 		}
 		return new String[0];
 	}
+	
+	/**
+	 * Returns if you have a Sensitive Field or not
+	 * @param fieldNames The FieldNames actual as Array
+	 * @return
+	 */
+	public boolean isContainingSensitive(String[] fieldNames) {
+		if (fieldNames != null) {
+			for (String field:fieldNames) {
+				ARXFields temp = this.fields.get(field);
+				if (temp != null && temp.getType().equals("Sensitive")) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return false;
+	}
 
 	/**
 	  * @author Florian Wiedner
