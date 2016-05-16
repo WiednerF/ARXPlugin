@@ -55,7 +55,7 @@ public class LayoutBottomLeft {
      
       Composite tabFieldComp = new Composite( parent, SWT.NONE );
      
-      tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
+      tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
       new ViewRisksQuasiIdentifier(tabFieldComp,result,result2,data,config,population,false,this.parentLayout);
       
@@ -70,7 +70,7 @@ public class LayoutBottomLeft {
      
       Composite tabFieldComp = new Composite( parent, SWT.NONE );
      
-      tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
+      tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
       new ViewRisksPopulationModel(tabFieldComp,result,result2,data,config,population,false);
       
@@ -84,7 +84,7 @@ public class LayoutBottomLeft {
      
       Composite tabFieldComp = new Composite( parent, SWT.NONE );
      
-      tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
+      tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
       new ViewRisksPopulationUniqueness(tabFieldComp,result,result2,data,config,population,false,true);
       
@@ -98,7 +98,7 @@ public class LayoutBottomLeft {
      
       Composite tabFieldComp = new Composite( parent, SWT.NONE );
      
-      tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
+      tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
       new ViewRisksPopulationUniqueness(tabFieldComp,result,result2,data,config,population,false,false);
       
@@ -112,7 +112,7 @@ public class LayoutBottomLeft {
      
       Composite tabFieldComp = new Composite( parent, SWT.NONE );
      
-      tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
+      tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
       new ViewRisksReidentificationRisksTable(tabFieldComp,result,result2,data,config,population,false);
       

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.deidentifier.arx.AttributeType;
 import org.deidentifier.arx.AttributeType.MicroAggregationFunctionDescription;
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
 import org.deidentifier.arx.kettle.dialoge.resources.ComponentMultiStack;
@@ -80,7 +81,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
 			 wTabFolder = new CTabFolder( parent,SWT.BORDER );
 		      props.setLook( wTabFolder, Props.WIDGET_STYLE_TAB );
 		      wTabFolder.setSimple( false );
-		      wTabFolder.setLayoutData(ARXDialogGeneralTab.createFillHorizontallyGridData());
+		      wTabFolder.setLayoutData(SWTUtil.createFillHorizontallyGridData());
 		      
 		      
 		      cTabTransformation = new CTabItem( wTabFolder, SWT.NONE );

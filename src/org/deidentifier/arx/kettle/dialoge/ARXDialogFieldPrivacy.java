@@ -1,5 +1,6 @@
 package org.deidentifier.arx.kettle.dialoge;
 
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
 import org.deidentifier.arx.kettle.meta.ARXFields;
@@ -83,7 +84,7 @@ private static Class<?> PKG = ARXPluginMeta.class;
 		 wTabFolder = new CTabFolder( parent,SWT.BORDER );
 	      props.setLook( wTabFolder, Props.WIDGET_STYLE_TAB );
 	      wTabFolder.setSimple( false );
-	      wTabFolder.setLayoutData(ARXDialogGeneralTab.createFillHorizontallyGridData());
+	      wTabFolder.setLayoutData(SWTUtil.createFillHorizontallyGridData());
 	      
 	      
 	      cTabPrivacy = new CTabItem( wTabFolder, SWT.NONE );
@@ -121,7 +122,7 @@ private static Class<?> PKG = ARXPluginMeta.class;
         btnLDiversity.setText(Messages.getString("ARXPluginDialog.criteria.privacy.enabled")); //$NON-NLS-1$
         btnLDiversity.setSelection(false);
         btnLDiversity.setEnabled(true);
-        final GridData d82 = ARXDialogGeneralTab.createFillHorizontallyGridData();
+        final GridData d82 = SWTUtil.createFillHorizontallyGridData();
         d82.horizontalSpan = 1;
         btnLDiversity.setLayoutData(d82);
         btnLDiversity.addSelectionListener(new SelectionAdapter() {
@@ -236,7 +237,7 @@ private static Class<?> PKG = ARXPluginMeta.class;
 	        btnDDisclosure.setText(Messages.getString("ARXPluginDialog.criteria.privacy.enabled")); //$NON-NLS-1$
 	        btnDDisclosure.setSelection(false);
 	        btnDDisclosure.setEnabled(true);
-	        final GridData d82 = ARXDialogGeneralTab.createFillHorizontallyGridData();
+	        final GridData d82 = SWTUtil.createFillHorizontallyGridData();
 	        d82.horizontalSpan = 1;
 	        btnDDisclosure.setLayoutData(d82);
 	        btnDDisclosure.addSelectionListener(new SelectionAdapter() {
@@ -259,7 +260,7 @@ private static Class<?> PKG = ARXPluginMeta.class;
 	});
 	    	// Create input group
 	        final Composite group = new Composite(parent, SWT.NONE);
-	        group.setLayoutData(ARXDialogGeneralTab.createFillHorizontallyGridData());
+	        group.setLayoutData(SWTUtil.createFillHorizontallyGridData());
 	        final GridLayout groupInputGridLayout = new GridLayout();
 	        groupInputGridLayout.numColumns = 3;
 	        group.setLayout(groupInputGridLayout);
@@ -269,7 +270,7 @@ private static Class<?> PKG = ARXPluginMeta.class;
 	        zLabel.setText(Messages.getString("ARXPluginDialog.field.privacy.ddisclosureprivacy.1")); //$NON-NLS-1$
 
 	        this.labelDDisclosure= new Text(group, SWT.BORDER | SWT.LEFT);
-	        GridData data = ARXDialogGeneralTab.createFillHorizontallyGridData(false);
+	        GridData data = SWTUtil.createFillHorizontallyGridData(false);
 	        labelDDisclosure.setLayoutData(data);
 	        labelDDisclosure.setEditable(false);
 	        knobDDisclosure = new Knob<Double>(group, SWT.NULL, new KnobRange.Double(0.000001d, 10d));
@@ -293,7 +294,7 @@ private static Class<?> PKG = ARXPluginMeta.class;
 	        btnTCloseness.setText(Messages.getString("ARXPluginDialog.criteria.privacy.enabled")); //$NON-NLS-1$
 	        btnTCloseness.setSelection(false);
 	        btnTCloseness.setEnabled(true);
-	        final GridData d82 = ARXDialogGeneralTab.createFillHorizontallyGridData();
+	        final GridData d82 = SWTUtil.createFillHorizontallyGridData();
 	        d82.horizontalSpan = 1;
 	        btnTCloseness.setLayoutData(d82);
 	        btnTCloseness.addSelectionListener(new SelectionAdapter() {
@@ -320,7 +321,7 @@ private static Class<?> PKG = ARXPluginMeta.class;
 	});
 	    	// Create input group
 	        final Composite group = new Composite(parent, SWT.NONE);
-	        group.setLayoutData(ARXDialogGeneralTab.createFillHorizontallyGridData());
+	        group.setLayoutData(SWTUtil.createFillHorizontallyGridData());
 	        final GridLayout groupInputGridLayout = new GridLayout();
 	        groupInputGridLayout.numColumns = 5;
 	        group.setLayout(groupInputGridLayout);
@@ -344,7 +345,7 @@ private static Class<?> PKG = ARXPluginMeta.class;
 	        zLabel.setText(Messages.getString("ARXPluginDialog.field.privacy.tcloseness.2")); //$NON-NLS-1$
 
 	        this.labelTCloseness= new Text(group, SWT.BORDER | SWT.LEFT);
-	        GridData data = ARXDialogGeneralTab.createFillHorizontallyGridData(false);
+	        GridData data = SWTUtil.createFillHorizontallyGridData(false);
 	        labelTCloseness.setLayoutData(data);
 	        labelTCloseness.setEditable(false);
 	        this.knobTCloseness = new Knob<Double>(group, SWT.NULL, new KnobRange.Double(0.000001d, 10d));

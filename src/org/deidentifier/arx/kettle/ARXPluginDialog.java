@@ -145,7 +145,7 @@ public class ARXPluginDialog extends org.pentaho.di.ui.trans.step.BaseStepDialog
 		      wTabFolder.setSimple( false );
 		  		      
 		      
-		     this.composites[0]=new ARXDialogGeneralTab(wTabFolder,input,props,lsMod,fieldNames);
+		     this.composites[0]=new ARXDialogGeneralTab(wTabFolder,input,props,fieldNames);
 		     this.composites[1]=new ARXDialogFieldTab(wTabFolder,input,props,lsMod,fieldNames,transMeta);
 		      //END TABS
 		     wTabFolder.setSelection(0);

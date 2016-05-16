@@ -1,5 +1,6 @@
 package org.deidentifier.arx.kettle.dialoge;
 
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
 import org.eclipse.swt.SWT;
@@ -64,7 +65,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 	      Composite tabFieldComp = new Composite( scroller, SWT.NONE );
 	      props.setLook( tabFieldComp );
 	     
-	      tabFieldComp.setLayout( ARXDialogGeneralTab.createGridLayout(1));
+	      tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
 	      
 			Composite compositeRight;
 			Composite compositeCenterRight;
@@ -72,23 +73,23 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 			Composite compositeTopRight;
 	        // Create right composite
 	        compositeRight = new Composite(tabFieldComp, SWT.NONE);
-	        compositeRight.setLayoutData(ARXDialogGeneralTab.createFillGridData());
-	        compositeRight.setLayout( ARXDialogGeneralTab.createGridLayout(1)); 
+	        compositeRight.setLayoutData(SWTUtil.createFillGridData());
+	        compositeRight.setLayout( SWTUtil.createGridLayout(1)); 
 
 	     // Create center-right composite
 	        compositeTopRight = new Composite(compositeRight, SWT.NONE);
-	        compositeTopRight.setLayoutData(ARXDialogGeneralTab.createFillHorizontallyGridData());
-	        compositeTopRight.setLayout(ARXDialogGeneralTab.createGridLayout(1));
+	        compositeTopRight.setLayoutData(SWTUtil.createFillHorizontallyGridData());
+	        compositeTopRight.setLayout(SWTUtil.createGridLayout(1));
 	        
 	        // Create center-right composite
 	        compositeCenterRight = new Composite(compositeRight, SWT.NONE);
-	        compositeCenterRight.setLayoutData(ARXDialogGeneralTab.createFillHorizontallyGridData());
-	        compositeCenterRight.setLayout(ARXDialogGeneralTab.createGridLayout(1));
+	        compositeCenterRight.setLayoutData(SWTUtil.createFillHorizontallyGridData());
+	        compositeCenterRight.setLayout(SWTUtil.createGridLayout(1));
 	        
 	        // Create bottom-right composite
 	        compositeBottomRight = new Composite(compositeRight, SWT.NONE);
-	        compositeBottomRight.setLayoutData(ARXDialogGeneralTab.createFillHorizontallyGridData());
-	        compositeBottomRight.setLayout(ARXDialogGeneralTab.createGridLayout(1));
+	        compositeBottomRight.setLayoutData(SWTUtil.createFillHorizontallyGridData());
+	        compositeBottomRight.setLayout(SWTUtil.createGridLayout(1));
 	        
 	        this.fieldList(compositeTopRight);
 	        this.composites[0]=new ARXDialogFieldTransformation(compositeCenterRight,meta,props,lsMod,this,transMeta);
@@ -114,7 +115,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 	protected Composite fieldList(Composite parent){
 		// Create input group
   final Composite group = new Composite(parent, SWT.NONE);
-  group.setLayoutData(ARXDialogGeneralTab.createFillHorizontallyGridData());
+  group.setLayoutData(SWTUtil.createFillHorizontallyGridData());
   final GridLayout groupInputGridLayout = new GridLayout();
   groupInputGridLayout.numColumns = 2;
   group.setLayout(groupInputGridLayout);
