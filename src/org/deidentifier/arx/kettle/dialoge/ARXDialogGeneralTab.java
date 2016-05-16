@@ -2,6 +2,7 @@ package org.deidentifier.arx.kettle.dialoge;
 
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
+import org.deidentifier.arx.kettle.define.LayoutCriteria;
 import org.deidentifier.arx.kettle.define.LayoutTransformationModel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -71,7 +72,7 @@ public class ARXDialogGeneralTab implements ARXPluginDialogInterface {
 	        
 	        
 	        this.composites[0]=new LayoutTransformationModel(compositeBottomRight,this.meta,this.props,this.fieldNames);
-	        this.composites[1]=new ARXDialogCriteria(compositeCenterRight,this.meta,this.props,this.lsMod);
+	        this.composites[1]=new LayoutCriteria(compositeCenterRight,this.meta,this.props);
 	     
 	      FormData tabGeneralFileComp = new FormData();
 	      tabGeneralFileComp.left = new FormAttachment( 0, 0 );

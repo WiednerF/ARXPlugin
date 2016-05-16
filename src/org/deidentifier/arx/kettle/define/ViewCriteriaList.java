@@ -46,7 +46,7 @@ import de.linearbits.swt.widgets.KnobRange;
  * Creates the View for the Not Field Dependend Privacy Criteria
  * @author Florian Wiedner
  * @version 1.0
- * @category ARXDialogCriteria
+ * @category LayoutCriteria
  * @since 1.7
  *
  */
