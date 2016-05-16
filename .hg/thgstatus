@@ -4,6 +4,6 @@ rdistrib/lib
 rlib
 msrc/org/deidentifier/arx/kettle
 rsrc/org/deidentifier/arx/kettle/attribut
-msrc/org/deidentifier/arx/kettle/dialoge
-msrc/org/deidentifier/arx/kettle/dialoge/resources
+rsrc/org/deidentifier/arx/kettle/dialoge
+rsrc/org/deidentifier/arx/kettle/dialoge/resources
 msrc/org/deidentifier/arx/kettle/messages

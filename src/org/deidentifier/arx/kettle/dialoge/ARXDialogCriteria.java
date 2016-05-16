@@ -2,6 +2,7 @@ package org.deidentifier.arx.kettle.dialoge;
 
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
+import org.deidentifier.arx.kettle.define.ViewCriteriaList;
 import org.deidentifier.arx.kettle.define.ViewPopulationModel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -54,7 +55,7 @@ public class ARXDialogCriteria implements ARXPluginDialogInterface {
 	      Composite cTabPrivacyComp = new Composite( this.wTabFolder, SWT.NONE );
 	      props.setLook(  cTabPrivacyComp );
 	      cTabPrivacyComp.setLayout(new FillLayout());
-	      this.composites[0]=new ARXDialogCriteriaPrivacy(cTabPrivacyComp,meta,props,lsMod);
+	      this.composites[0]=new ViewCriteriaList(cTabPrivacyComp,meta);
 	      cTabPrivacyComp.layout();
 	      cTabPrivacy.setControl( cTabPrivacyComp );
 	      
