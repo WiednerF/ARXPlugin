@@ -24,7 +24,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.pentaho.di.core.Props;
 import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.di.trans.TransMeta;
@@ -89,7 +88,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
 		      wTabFolder.setSelection(0);
 		      Composite cTabTransformationComp = new Composite( this.wTabFolder, SWT.NONE );
 		      props.setLook(  cTabTransformationComp );
-		      cTabTransformationComp.setLayoutData(ARXDialogFieldTab.createFillHorizontallyGridData());
+		      cTabTransformationComp.setLayoutData(SWTUtil.createFillHorizontallyGridData());
 		      cTabTransformationComp.setLayout(new FillLayout());
 		      
 		      
@@ -113,7 +112,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
         
         // Group
         final Composite innerGroup = new Composite(parent, SWT.NULL);
-        innerGroup.setLayoutData(ARXDialogFieldTab.createFillHorizontallyGridData());
+        innerGroup.setLayoutData(SWTUtil.createFillHorizontallyGridData());
         final GridLayout typeInputGridLayout = new GridLayout();
         typeInputGridLayout.numColumns = 4;
         innerGroup.setLayout(typeInputGridLayout);
@@ -122,7 +121,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
         final Label kLabel = new Label(innerGroup, SWT.PUSH);
         kLabel.setText(Messages.getString("ARXPluginDialog.field.transformation.type")); //$NON-NLS-1$
         cmbType = new Combo(innerGroup, SWT.READ_ONLY);
-        cmbType.setLayoutData(ARXDialogFieldTab.createFillGridData());
+        cmbType.setLayoutData(SWTUtil.createFillGridData());
         cmbType.setItems(new String[]{"Insensitive","Sensitive","Quasi-identifying","Identifying"});
         cmbType.select(0);
         cmbType.addSelectionListener(new SelectionAdapter() {
@@ -137,7 +136,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
         final Label fLabel2 = new Label(innerGroup, SWT.PUSH);
         fLabel2.setText(Messages.getString("ARXPluginDialog.field.transformation.mode")); //$NON-NLS-1$
         cmbMode = new Combo(innerGroup, SWT.READ_ONLY);
-        cmbMode.setLayoutData(ARXDialogFieldTab.createFillGridData());
+        cmbMode.setLayoutData(SWTUtil.createFillGridData());
         cmbMode.setItems(new String[]{Messages.getString("ARXPluginDialog.field.transformation.mode.1"),
         		Messages.getString("ARXPluginDialog.field.transformation.mode.2")});
         cmbMode.select(0);
@@ -157,7 +156,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
         stack = new ComponentMultiStack(innerGroup);
         
         // First column
-        Composite first = stack.create(ARXDialogFieldTab.createGridData());
+        Composite first = stack.create(SWTUtil.createGridData());
         
         Composite compositeLabelMin = new Composite(first, SWT.NONE);
         
@@ -180,9 +179,9 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
         labelFunction.setText(Messages.getString("ARXPluginDialog.field.transformation.function")); //$NON-NLS-1$
         
         // Second column
-        Composite second = stack.create(ARXDialogFieldTab.createFillHorizontallyGridData());
+        Composite second = stack.create(SWTUtil.createFillHorizontallyGridData());
         this.cmbMin = new Combo(second, SWT.READ_ONLY);
-        this.cmbMin.setLayoutData(ARXDialogFieldTab.createFillHorizontallyGridData());
+        this.cmbMin.setLayoutData(SWTUtil.createFillHorizontallyGridData());
         this.cmbMin.setItems(new String[]{"All","0","1","2","3","4","5"});
         this.cmbMin.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -191,7 +190,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
             }
         });
         this.cmbFunction = new Combo(second, SWT.READ_ONLY);
-        this.cmbFunction.setLayoutData(ARXDialogFieldTab.createFillGridData());
+        this.cmbFunction.setLayoutData(SWTUtil.createFillGridData());
         List<String> functions = new ArrayList<String>();
         for (MicroAggregationFunctionDescription function : AttributeType.listMicroAggregationFunctions()) {
         	functions.add(function.getLabel());
@@ -207,7 +206,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
         //TODO Ask at the Meeting: How can i get the correct functions
         
         // Third column
-        Composite third = stack.create(ARXDialogFieldTab.createGridData());
+        Composite third = stack.create(SWTUtil.createGridData());
         Composite compositelabelMax = new Composite(third, SWT.NONE);
         GridLayout compositelabelMaxLayout = new GridLayout();
         compositelabelMaxLayout.numColumns = 1;
@@ -228,9 +227,9 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
         labelMissing.setText(Messages.getString("ARXPluginDialog.field.transformation.missing")); //$NON-NLS-1$
         
         // Fourth column
-        Composite fourth = stack.create(ARXDialogFieldTab.createFillHorizontallyGridData());
+        Composite fourth = stack.create(SWTUtil.createFillHorizontallyGridData());
         this.cmbMax = new Combo(fourth, SWT.READ_ONLY);
-        this.cmbMax.setLayoutData(ARXDialogFieldTab.createFillHorizontallyGridData());
+        this.cmbMax.setLayoutData(SWTUtil.createFillHorizontallyGridData());
         this.cmbMax.setItems(new String[]{"0","1","2","3","4","5","All"});
         this.cmbMax.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -239,7 +238,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
             }
         });
         btnMissing = new Button(fourth, SWT.CHECK);
-        GridData btnMissingData = ARXDialogFieldTab.createFillGridData();
+        GridData btnMissingData = SWTUtil.createFillGridData();
         btnMissingData.horizontalSpan = 2;
         btnMissing.setLayoutData(btnMissingData);
         btnMissing.setText(Messages.getString("ARXPluginDialog.field.transformation.missing.1")); //$NON-NLS-1$
@@ -264,7 +263,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
 	    this.textHierarchie = new TextVar(transMeta, parent, SWT.SINGLE | SWT.LEFT | SWT.BORDER );
 	    props.setLook( textHierarchie );
 	    this.textHierarchie.addModifyListener( lsMod );
-	    GridData btnHierarchieData = ARXDialogFieldTab.createFillGridData();
+	    GridData btnHierarchieData = SWTUtil.createFillGridData();
 	    btnHierarchieData.horizontalSpan = 2;
         textHierarchie.setLayoutData(btnHierarchieData);
 	    
@@ -326,9 +325,9 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
 	
 	public void updateFromAttributeType(){
 		if(this.cmbType.getItem(this.cmbType.getSelectionIndex()).equals("Sensitive")){
-			this.parentFieldTab.privacy.enable(true);
+			this.parentFieldTab.getPrivacy().enable(true);
 		}else{
-			this.parentFieldTab.privacy.enable(false);
+			this.parentFieldTab.getPrivacy().enable(false);
 		}
 		if(this.cmbType.getItem(this.cmbType.getSelectionIndex()).equals("Quasi-identifying")){
 			this.textHierarchie.setEnabled(true);

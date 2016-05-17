@@ -3,6 +3,7 @@ package org.deidentifier.arx.kettle.dialoge;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
+import org.deidentifier.arx.kettle.define.ViewCriteriaListField;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -37,7 +38,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 	  	private Combo comboField;
 	  	public String field;
 	  	private TransMeta transMeta;
-		public ARXDialogFieldPrivacy privacy;
+		public ViewCriteriaListField privacy;
 
 
 	public ARXDialogFieldTab(final CTabFolder parent,ARXPluginMeta meta, final PropsUI props, ModifyListener lsMod,String[] fieldNames,TransMeta transMeta) {
@@ -93,7 +94,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 	        
 	        this.fieldList(compositeTopRight);
 	        this.composites[0]=new ARXDialogFieldTransformation(compositeCenterRight,meta,props,lsMod,this,transMeta);
-	        this.privacy=new ARXDialogFieldPrivacy(compositeBottomRight,meta,props,lsMod,this,transMeta);
+	        this.privacy=new ViewCriteriaListField(compositeBottomRight,meta,props,this.comboField.getItem(this.comboField.getSelectionIndex()));
 	        this.composites[1]=this.privacy;
 	     
 	      FormData tabGeneralFileComp = new FormData();
@@ -131,6 +132,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
     	saveData();
     	field=comboField.getItem(comboField.getSelectionIndex());
     	for(int i=0;i<composites.length;i++){
+    		privacy.setFieldName(comboField.getItem(comboField.getSelectionIndex()));
     		composites[i].getData();//TODO Use field in getData
     	}
       	meta.setChanged(true);
@@ -141,6 +143,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 	}
 
 	public void getData(){
+		this.privacy.setFieldName(this.comboField.getItem(this.comboField.getSelectionIndex()));
 		for(ARXPluginDialogInterface composite:this.composites){
 			composite.getData();
 		}
@@ -151,128 +154,13 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 			composite.saveData();
 		}
 	}
+
+	public ViewCriteriaListField getPrivacy() {
+		return privacy;
+	}
+
+	public void setPrivacy(ViewCriteriaListField privacy) {
+		this.privacy = privacy;
+	}
 	
-    /**
-     * Creates grid data.
-     *
-     * @return
-     */
-    public static GridData createGridData() {
-        final GridData data = new GridData();
-        data.horizontalAlignment = SWT.FILL;
-        data.verticalAlignment = SWT.FILL;
-        data.grabExcessHorizontalSpace = false;
-        data.grabExcessVerticalSpace = false;
-        return data;
-    }
-    
-    /**
-     * Creates a grid layout.
-     *
-     * @param columns
-     * @return
-     */
-    public static GridLayout createGridLayout(int columns) {
-        final GridLayout layout = new GridLayout();
-        layout.numColumns = columns;
-        layout.marginBottom = 0;
-        layout.marginHeight = 0;
-        layout.marginLeft = 0;
-        layout.marginRight = 0;
-        layout.marginTop = 0;
-        layout.marginWidth = 0;
-        return layout;
-    }
-
-    /**
-     * Creates a grid layout.
-     *
-     * @param columns
-     * @param compact
-     * @return
-     */
-    public static GridLayout createGridLayout(int columns, boolean compact) {
-        if (compact) return createGridLayout(columns);
-        final GridLayout layout = new GridLayout();
-        layout.numColumns = columns;
-        return layout;
-    }
-    
-    /**
-     * Creates grid data.
-     *
-     * @return
-     */
-    public static GridData createFillGridData() {
-        return createFillGridData(1);
-    }
-
-    /**
-     * Creates grid data.
-     *
-     * @return
-     */
-    public static GridData createFillGridData(int span) {
-        final GridData data = new GridData();
-        data.horizontalAlignment = SWT.FILL;
-        data.verticalAlignment = SWT.FILL;
-        data.grabExcessHorizontalSpace = true;
-        data.grabExcessVerticalSpace = true;
-        data.horizontalIndent=0;
-        data.verticalIndent=0;
-        data.horizontalSpan = span;
-        return data;
-    }
-
-    /**
-     * Creates grid data.
-     *
-     * @return
-     */
-    public static GridData createFillHorizontallyGridData() {
-        return createFillHorizontallyGridData(true);
-    }
-
-    /**
-     * Creates grid data.
-     *
-     * @return
-     */
-    public static GridData createFillHorizontallyGridData(boolean fill) {
-        return createFillHorizontallyGridData(fill, 1);
-    }
-    /**
-     * Creates grid data.
-     *
-     * @return
-     */
-    public static GridData createFillHorizontallyGridData(boolean fill, int span) {
-        final GridData data = new GridData();
-        data.horizontalAlignment = SWT.FILL;
-        data.verticalAlignment = fill ? SWT.FILL : SWT.CENTER;
-        data.grabExcessHorizontalSpace = true;
-        data.grabExcessVerticalSpace = false;
-        data.horizontalSpan = span;
-        data.horizontalIndent=0;
-        data.verticalIndent=0;
-        return data;
-    }
-
-    /**
-     * Creates grid data.
-     *
-     * @return
-     */
-    public static GridData createFillVerticallyGridData() {
-        final GridData data = new GridData();
-        data.horizontalAlignment = SWT.FILL;
-        data.verticalAlignment = SWT.FILL;
-        data.grabExcessHorizontalSpace = false;
-        data.grabExcessVerticalSpace = true;
-        data.horizontalIndent=0;
-        data.verticalIndent=0;
-        return data;
-    }
-
-
 }

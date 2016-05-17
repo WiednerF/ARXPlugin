@@ -16,8 +16,8 @@
  */
 package org.deidentifier.arx.kettle.define;
 
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXDialogFieldTab;
 import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.kettle.meta.ARXFields;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -169,7 +169,7 @@ public class ViewAttributeWeights implements ARXPluginDialogInterface {
     protected Text createLabel(Composite parent) {
 
         final Text label = new Text(parent, SWT.BORDER | SWT.LEFT);
-        GridData data = ARXDialogFieldTab.createFillHorizontallyGridData(false);
+        GridData data = SWTUtil.createFillHorizontallyGridData(false);
         label.setLayoutData(data);
         label.setEditable(false);
         return label;
