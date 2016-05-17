@@ -6,7 +6,7 @@ import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
-import org.deidentifier.arx.kettle.dialoge.ARXDialogGeneralTab;
+import org.deidentifier.arx.kettle.define.LayoutGeneral;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;

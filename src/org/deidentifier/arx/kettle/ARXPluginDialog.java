@@ -5,8 +5,8 @@ package org.deidentifier.arx.kettle;
  */
 
 
+import org.deidentifier.arx.kettle.define.LayoutGeneral;
 import org.deidentifier.arx.kettle.dialoge.ARXDialogFieldTab;
-import org.deidentifier.arx.kettle.dialoge.ARXDialogGeneralTab;
 import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -151,7 +151,7 @@ public class ARXPluginDialog extends org.pentaho.di.ui.trans.step.BaseStepDialog
 			      });
 		  		      
 		      
-		     this.composites[0]=new ARXDialogGeneralTab(wTabFolder,input,props,fieldNames);
+		     this.composites[0]=new LayoutGeneral(wTabFolder,input,props,fieldNames);
 		     this.composites[1]=new ARXDialogFieldTab(wTabFolder,input,props,lsMod,fieldNames,transMeta);
 		      //END TABS
 		     wTabFolder.setSelection(0);

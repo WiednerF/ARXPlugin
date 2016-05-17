@@ -35,7 +35,7 @@ import org.pentaho.di.ui.core.PropsUI;
  * @author Florian Wiedner
  * @version 1.0
  * @since 1.7
- * @category ARXDialogGeneralTab
+ * @category LayoutGeneral
  *
  */
 public class LayoutCriteria implements ARXPluginDialogInterface {
