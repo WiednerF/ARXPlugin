@@ -228,7 +228,7 @@ public class LayoutTransformationModel implements ARXPluginDialogInterface {
 		for(ARXPluginDialogInterface composite:this.composites){
 			if(composite!=null) composite.getData();
 		}
-		if(this.attributeWeight.quasiIdentifierChanged()&&this.attributeWeight!=null){
+		if(this.attributeWeight!=null&&this.attributeWeight.quasiIdentifierChanged()){
 			this.hideSettingsAttributeWeights();
 			this.showSettingsAttributeWeights();
 		}
