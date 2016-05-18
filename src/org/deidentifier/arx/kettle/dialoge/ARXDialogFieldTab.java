@@ -13,7 +13,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -36,7 +35,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 	  	
 	  	private String[] fieldNames;
 	  	private Combo comboField;
-	  	public String field;
+	  	private String field;
 	  	private TransMeta transMeta;
 		public ViewCriteriaListField privacy;
 
@@ -93,7 +92,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 	        compositeBottomRight.setLayout(SWTUtil.createGridLayout(1));
 	        
 	        this.fieldList(compositeTopRight);
-	        this.composites[0]=new ARXDialogFieldTransformation(compositeCenterRight,meta,props,lsMod,this,transMeta);
+	        this.composites[0]=new ARXDialogFieldTransformation(compositeCenterRight,meta,props,lsMod,this,transMeta,this.comboField.getItem(this.comboField.getSelectionIndex()));
 	        this.privacy=new ViewCriteriaListField(compositeBottomRight,meta,props,this.comboField.getItem(this.comboField.getSelectionIndex()));
 	        this.composites[1]=this.privacy;
 	     
@@ -133,7 +132,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
     	field=comboField.getItem(comboField.getSelectionIndex());
     	for(int i=0;i<composites.length;i++){
     		privacy.setFieldName(comboField.getItem(comboField.getSelectionIndex()));
-    		composites[i].getData();//TODO Use field in getData
+    		composites[i].getData();
     	}
       	meta.setChanged(true);
       }
@@ -144,6 +143,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 
 	public void getData(){
 		this.privacy.setFieldName(this.comboField.getItem(this.comboField.getSelectionIndex()));
+		((ARXDialogFieldTransformation)this.composites[0]).setFieldName(this.comboField.getItem(this.comboField.getSelectionIndex()));
 		for(ARXPluginDialogInterface composite:this.composites){
 			composite.getData();
 		}

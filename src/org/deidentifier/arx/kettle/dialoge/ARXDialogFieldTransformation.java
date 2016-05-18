@@ -8,7 +8,7 @@ import org.deidentifier.arx.AttributeType.MicroAggregationFunctionDescription;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
-import org.deidentifier.arx.kettle.dialoge.resources.ComponentMultiStack;
+import org.deidentifier.arx.kettle.define.common.ComponentMultiStack;
 import org.deidentifier.arx.kettle.meta.ARXFields;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -67,10 +67,12 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
     private CTabFolder wTabFolder;
 	
 	private CTabItem cTabTransformation;
+	private String fieldName;
 
 
-	public ARXDialogFieldTransformation(final Composite parent,ARXPluginMeta meta, final PropsUI props, ModifyListener lsMod,ARXDialogFieldTab parentFieldTab,TransMeta transMeta) {
+	public ARXDialogFieldTransformation(final Composite parent,ARXPluginMeta meta, final PropsUI props, ModifyListener lsMod,ARXDialogFieldTab parentFieldTab,TransMeta transMeta,String field) {
 		this.parent=parent;
+		this.fieldName=field;
 		this.meta=meta;
 		this.props=props;
 		this.lsMod = lsMod;
@@ -107,9 +109,6 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
 	
 	
 	private void build(final Composite parent){
-		 // Group
-        
-        
         // Group
         final Composite innerGroup = new Composite(parent, SWT.NULL);
         innerGroup.setLayoutData(SWTUtil.createFillHorizontallyGridData());
@@ -295,7 +294,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
 	}
 
 	public void getData() {
-		ARXFields field=this.meta.getField(this.parentFieldTab.field);
+		ARXFields field=this.meta.getField(this.fieldName);
 		this.cmbType.select(this.cmbType.indexOf(field.getType()));
 		this.cmbMode.select(field.getTransformation());
 		stack.setLayer(field.getTransformation());
@@ -312,7 +311,7 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
 	}
 
 	public void saveData() {
-		ARXFields field=this.meta.getField(this.parentFieldTab.field);
+		ARXFields field=this.meta.getField(this.fieldName);
 		field.setType(this.cmbType.getItem(this.cmbType.getSelectionIndex()));
 		field.setTransformation(this.cmbMode.getSelectionIndex());
 		field.setFunctionMicro(this.cmbFunction.getItem(this.cmbFunction.getSelectionIndex()));
@@ -338,5 +337,23 @@ public class ARXDialogFieldTransformation implements ARXPluginDialogInterface {
 		}
 
 	}
+	
+	   /**
+     * 
+     * @return The FieldName for Performance Reasons
+     */
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	/**
+	 * 
+	 * @param fieldName The New FieldName for Updating
+	 */
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+		this.getData();
+	}
+	
 
 }
