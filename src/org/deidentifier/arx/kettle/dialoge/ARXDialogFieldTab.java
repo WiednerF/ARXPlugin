@@ -3,6 +3,7 @@ package org.deidentifier.arx.kettle.dialoge;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.Messages;
+import org.deidentifier.arx.kettle.define.ViewAttributeTransformation;
 import org.deidentifier.arx.kettle.define.ViewCriteriaListField;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -92,7 +93,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 	        compositeBottomRight.setLayout(SWTUtil.createGridLayout(1));
 	        
 	        this.fieldList(compositeTopRight);
-	        this.composites[0]=new ARXDialogFieldTransformation(compositeCenterRight,meta,props,lsMod,this,transMeta,this.comboField.getItem(this.comboField.getSelectionIndex()));
+	        this.composites[0]=new ViewAttributeTransformation(compositeCenterRight,meta,props,lsMod,this,transMeta,this.comboField.getItem(this.comboField.getSelectionIndex()));
 	        this.privacy=new ViewCriteriaListField(compositeBottomRight,meta,props,this.comboField.getItem(this.comboField.getSelectionIndex()));
 	        this.composites[1]=this.privacy;
 	     
@@ -143,7 +144,7 @@ public class ARXDialogFieldTab implements ARXPluginDialogInterface {
 
 	public void getData(){
 		this.privacy.setFieldName(this.comboField.getItem(this.comboField.getSelectionIndex()));
-		((ARXDialogFieldTransformation)this.composites[0]).setFieldName(this.comboField.getItem(this.comboField.getSelectionIndex()));
+		((ViewAttributeTransformation)this.composites[0]).setFieldName(this.comboField.getItem(this.comboField.getSelectionIndex()));
 		for(ARXPluginDialogInterface composite:this.composites){
 			composite.getData();
 		}
