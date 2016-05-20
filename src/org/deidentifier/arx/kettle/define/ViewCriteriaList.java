@@ -23,7 +23,6 @@ import org.deidentifier.arx.DataGeneralizationScheme.GeneralizationDegree;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -50,7 +49,7 @@ import de.linearbits.swt.widgets.KnobRange;
  * @since 1.7
  *
  */
-public class ViewCriteriaList implements ARXPluginDialogInterface {
+public class ViewCriteriaList implements LayoutCompositeInterface {
 	/**
 	 * The Meta Data for the Whole Project
 	 */
@@ -694,10 +693,6 @@ public class ViewCriteriaList implements ARXPluginDialogInterface {
 
 		}
 		this.sensitive=this.meta.isContainingSensitive(fieldNames);
-	}
-
-	public void saveData() {
-		//TODO Delete
 	}
 
 	/**

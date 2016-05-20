@@ -18,7 +18,6 @@ package org.deidentifier.arx.kettle.define;
 
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.kettle.meta.ARXFields;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -42,7 +41,7 @@ import de.linearbits.swt.widgets.KnobRange;
  * @version 1.0
  *
  */
-public class ViewAttributeWeights implements ARXPluginDialogInterface {
+public class ViewAttributeWeights implements LayoutCompositeInterface {
 
     /** Constant */
     private static final int        MIN_KNOB   = 30;
@@ -101,11 +100,6 @@ public class ViewAttributeWeights implements ARXPluginDialogInterface {
 			this.fields=this.meta.getQuasiIdentifierFields(this.fieldNames);
 			this.build(parent);
 		}
-	}
-
-	public void saveData() {
-		//TODO Delete
-
 	}
 	
 	/**

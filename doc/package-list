@@ -3,7 +3,6 @@ org.deidentifier.arx.gui.view
 org.deidentifier.arx.kettle
 org.deidentifier.arx.kettle.define
 org.deidentifier.arx.kettle.define.common
-org.deidentifier.arx.kettle.dialoge
 org.deidentifier.arx.kettle.dialoge.resources
 org.deidentifier.arx.kettle.meta
 org.deidentifier.arx.risk.resources.us

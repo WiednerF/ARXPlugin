@@ -5,9 +5,9 @@ package org.deidentifier.arx.kettle;
  */
 
 
+import org.deidentifier.arx.kettle.define.LayoutCompositeInterface;
+import org.deidentifier.arx.kettle.define.LayoutField;
 import org.deidentifier.arx.kettle.define.LayoutGeneral;
-import org.deidentifier.arx.kettle.dialoge.ARXDialogFieldTab;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.events.ModifyEvent;
@@ -47,7 +47,7 @@ public class ARXPluginDialog extends org.pentaho.di.ui.trans.step.BaseStepDialog
 	  private String[] fieldNames;
 	  private Button fdbShowAnalysis;
 	  
-	  private ARXPluginDialogInterface[] composites;
+	  private LayoutCompositeInterface[] composites;
 	  
 	  
 	
@@ -56,7 +56,7 @@ public class ARXPluginDialog extends org.pentaho.di.ui.trans.step.BaseStepDialog
 	{
 		super(parent, (BaseStepMeta)in, transMeta, sname);
 		input = (ARXPluginMeta) in;
-	    composites=new ARXPluginDialogInterface[2];
+	    composites=new LayoutCompositeInterface[2];
 	}
 
 	public String open()
@@ -152,7 +152,7 @@ public class ARXPluginDialog extends org.pentaho.di.ui.trans.step.BaseStepDialog
 		  		      
 		      
 		     this.composites[0]=new LayoutGeneral(wTabFolder,input,props,fieldNames);
-		     this.composites[1]=new ARXDialogFieldTab(wTabFolder,input,props,lsMod,fieldNames,transMeta);
+		     this.composites[1]=new LayoutField(wTabFolder,input,props,lsMod,fieldNames,transMeta);
 		      //END TABS
 		     wTabFolder.setSelection(0);
 		      FormData fdTabFolder = new FormData();
@@ -226,9 +226,6 @@ public class ARXPluginDialog extends org.pentaho.di.ui.trans.step.BaseStepDialog
 	 * Saves all the Information from the Plugin Dialog
 	 */
 	private void saveInfoInMeta(){
-		for(ARXPluginDialogInterface composite:this.composites){
-			composite.saveData();
-		}
 		this.input.setShowRiskAnalysis(this.fdbShowAnalysis.getSelection());
 	}
 	
@@ -236,7 +233,7 @@ public class ARXPluginDialog extends org.pentaho.di.ui.trans.step.BaseStepDialog
 	 * Writes the Data to the Plugin Dialog
 	 */
 	private void getData(){
-		for(ARXPluginDialogInterface composite:this.composites){
+		for(LayoutCompositeInterface composite:this.composites){
 			composite.getData();
 		}
 		this.fdbShowAnalysis.setSelection(this.input.isShowRiskAnalysis());

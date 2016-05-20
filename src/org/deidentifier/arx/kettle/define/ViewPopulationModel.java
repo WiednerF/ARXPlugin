@@ -20,7 +20,6 @@ import org.deidentifier.arx.ARXPopulationModel.Region;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.kettle.meta.RegionStore;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -44,7 +43,7 @@ import org.eclipse.swt.widgets.Text;
  * @category ViewCriteria
  *
  */
-public class ViewPopulationModel implements ARXPluginDialogInterface {
+public class ViewPopulationModel implements LayoutCompositeInterface {
 	/**
 	 * The meta Field for the whole Project
 	 */
@@ -194,11 +193,6 @@ public class ViewPopulationModel implements ARXPluginDialogInterface {
 			this.text2.setText(this.meta.getRegions(this.meta.getRegion()).getPopulation()+"");
 		}
 	}
-
-	public void saveData() {
-		//TODO Delete
-	}
-	
 	/**
 	 * Updates the ComboBox and Saves the Data to the Meta Class
 	 */

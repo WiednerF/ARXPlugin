@@ -19,7 +19,6 @@ package org.deidentifier.arx.kettle.define;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -37,7 +36,7 @@ import org.pentaho.di.ui.core.PropsUI;
  * @since 1.7
  *
  */
-public class LayoutGeneral implements ARXPluginDialogInterface {
+public class LayoutGeneral implements LayoutCompositeInterface {
 	
 	/**
 	 * The Meta Data for the Project Step
@@ -52,7 +51,7 @@ public class LayoutGeneral implements ARXPluginDialogInterface {
 	/**
 	 * The Composite Container for the Parts of this Tab
 	 */
-	private ARXPluginDialogInterface[] composites;
+	private LayoutCompositeInterface[] composites;
 	/**
 	 * The FieldNames from the Previous Step
 	 */
@@ -69,7 +68,7 @@ public class LayoutGeneral implements ARXPluginDialogInterface {
 		this.meta = meta;
 		this.props = props;
 		this.fieldNames = fieldNames;
-		composites = new ARXPluginDialogInterface[2];
+		composites = new LayoutCompositeInterface[2];
 
 		CTabItem tabGeneral = new CTabItem(parent, SWT.NONE);
 		tabGeneral.setText(Resources.getMessage("General.2"));
@@ -124,17 +123,9 @@ public class LayoutGeneral implements ARXPluginDialogInterface {
 	 * @see org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface#getData()
 	 */
 	public void getData() {
-		for (ARXPluginDialogInterface composite : this.composites) {
+		for (LayoutCompositeInterface composite : this.composites) {
 			composite.getData();
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface#saveData()
-	 */
-	public void saveData() {
-		// TODO Delete
 	}
 
 }

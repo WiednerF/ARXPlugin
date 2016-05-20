@@ -21,7 +21,6 @@ import java.util.List;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.metric.Metric;
 import org.deidentifier.arx.metric.Metric.AggregateFunction;
 import org.deidentifier.arx.metric.MetricDescription;
@@ -42,7 +41,7 @@ import org.eclipse.swt.widgets.Label;
  * @category LayoutTransformationModel
  * @since 1.7
  */
-public class ViewUtilityMeasures implements ARXPluginDialogInterface {
+public class ViewUtilityMeasures implements LayoutCompositeInterface {
 
 
     /** Static settings. */
@@ -234,11 +233,6 @@ public class ViewUtilityMeasures implements ARXPluginDialogInterface {
 			this.comboAggregate.select(this.comboAggregate.indexOf(meta.getAggregation()));
 		}
 	}
-
-	public void saveData() {
-		//TODO Delete
-	}
-	
 	/**
 	 * This Methode updates the view with the new Metric Model
 	 * @author Florian Wiedner

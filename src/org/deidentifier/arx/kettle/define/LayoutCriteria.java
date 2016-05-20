@@ -19,7 +19,6 @@ package org.deidentifier.arx.kettle.define;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -38,7 +37,7 @@ import org.pentaho.di.ui.core.PropsUI;
  * @category LayoutGeneral
  *
  */
-public class LayoutCriteria implements ARXPluginDialogInterface {
+public class LayoutCriteria implements LayoutCompositeInterface {
 	/**
 	 * The Meta for the Whole Project for Saving
 	 */
@@ -52,7 +51,7 @@ public class LayoutCriteria implements ARXPluginDialogInterface {
 	/**
 	 * The Composite Interfaces for Saving and getting of Data
 	 */
-	private ARXPluginDialogInterface[] composites;
+	private LayoutCompositeInterface[] composites;
 	
 	/**
 	 * The Tab Folder 
@@ -78,7 +77,7 @@ public class LayoutCriteria implements ARXPluginDialogInterface {
 		this.meta=meta;
 		this.fieldNames=fieldNames;
 		this.props=props;
-		composites=new ARXPluginDialogInterface[2];
+		composites=new LayoutCompositeInterface[2];
 		this.build(parent);
 	}
 	
@@ -131,13 +130,9 @@ public class LayoutCriteria implements ARXPluginDialogInterface {
 	 * @see org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface#getData()
 	 */
 	public void getData() {
-		for(ARXPluginDialogInterface composite:this.composites){
+		for(LayoutCompositeInterface composite:this.composites){
 			composite.getData();
 		}
-	}
-
-	public void saveData() {
-		//TODO Delete
 	}
 
 }

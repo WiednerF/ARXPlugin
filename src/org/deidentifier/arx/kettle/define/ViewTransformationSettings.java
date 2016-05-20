@@ -19,7 +19,6 @@ package org.deidentifier.arx.kettle.define;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -37,7 +36,7 @@ import org.eclipse.swt.widgets.Scale;
  * @since 1.7
  *
  */
-public class ViewTransformationSettings implements ARXPluginDialogInterface {
+public class ViewTransformationSettings implements LayoutCompositeInterface {
 	/** Static settings. */
     private static final int      LABEL_WIDTH  = 50;
     
@@ -222,14 +221,6 @@ public class ViewTransformationSettings implements ARXPluginDialogInterface {
 		}else{
 			this.precomputationThreshold.setEnabled(true);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface#saveData()
-	 */
-	public void saveData() {
-		//TODO Delete
 	}
 
 }

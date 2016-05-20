@@ -18,7 +18,6 @@ package org.deidentifier.arx.kettle.define;
 
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.define.common.ComponentGSSlider;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
@@ -30,7 +29,7 @@ import org.eclipse.swt.widgets.Composite;
  * @since 1.7
  *
  */
-public class ViewCodingModel implements ARXPluginDialogInterface {
+public class ViewCodingModel implements LayoutCompositeInterface {
 
 	/**
 	 * The Meta Information for Saving and getting Saved Data
@@ -73,10 +72,6 @@ public class ViewCodingModel implements ARXPluginDialogInterface {
 	 */
 	public void getData() {
 		this.slider.setSelection(this.meta.getGSFactor());
-	}
-
-	public void saveData() {
-		//TODO Delete
 	}
 
 }

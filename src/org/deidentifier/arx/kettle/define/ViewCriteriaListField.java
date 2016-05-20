@@ -19,7 +19,6 @@ package org.deidentifier.arx.kettle.define;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.kettle.meta.ARXFields;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
@@ -47,11 +46,11 @@ import de.linearbits.swt.widgets.KnobRange;
  * This Class Contains the View of the Privacy Criterion of the Field Wise Attributes
  * @author Florian Wiedner
  * @since 1.7
- * @category ARXDialogFieldTab
+ * @category LayoutField
  * @version 1.0
  *
  */
-public class ViewCriteriaListField implements ARXPluginDialogInterface {
+public class ViewCriteriaListField implements LayoutCompositeInterface {
 	
 	/**
 	 * The Meta Information for this Project
@@ -401,14 +400,6 @@ public class ViewCriteriaListField implements ARXPluginDialogInterface {
 		this.knobLDiversityC.setValue(field.getlDiversityC());
 		this.labelLDiversityC.setText(field.getlDiversityC()+"");
 		this.comboLDiversityVariant.select(field.getlDiversityVariant());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface#saveData()
-	 */
-	public void saveData() {
-		//TODO Delete
 	}
 	
 	/**

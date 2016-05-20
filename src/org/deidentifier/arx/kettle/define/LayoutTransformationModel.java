@@ -19,7 +19,6 @@ package org.deidentifier.arx.kettle.define;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.metric.MetricDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -42,7 +41,7 @@ import org.pentaho.di.ui.core.PropsUI;
  * @version 1.0
  *
  */
-public class LayoutTransformationModel implements ARXPluginDialogInterface {
+public class LayoutTransformationModel implements LayoutCompositeInterface {
 	/**
 	 * The Meat Information for Saving and catching of the Data
 	 */
@@ -56,7 +55,7 @@ public class LayoutTransformationModel implements ARXPluginDialogInterface {
 	/**
 	 * The Tab Composites which are Used here and which we need for further action
 	 */
-	private ARXPluginDialogInterface[] composites;
+	private LayoutCompositeInterface[] composites;
 	
 	/**
 	 * The Coding Model Tab
@@ -91,7 +90,7 @@ public class LayoutTransformationModel implements ARXPluginDialogInterface {
 		this.meta=meta;
 		this.props=props;
 		this.fieldNames=fieldNames;
-		composites=new ARXPluginDialogInterface[4];
+		composites=new LayoutCompositeInterface[4];
 		this.build(parent);    
 	}
 	
@@ -225,7 +224,7 @@ public class LayoutTransformationModel implements ARXPluginDialogInterface {
      * @see org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface#getData()
      */
 	public void getData() {
-		for(ARXPluginDialogInterface composite:this.composites){
+		for(LayoutCompositeInterface composite:this.composites){
 			if(composite!=null) composite.getData();
 		}
 		if(this.attributeWeight!=null&&this.attributeWeight.quasiIdentifierChanged()){
@@ -233,10 +232,6 @@ public class LayoutTransformationModel implements ARXPluginDialogInterface {
 			this.showSettingsAttributeWeights();
 		}
 
-	}
-
-	public void saveData() {
-			//TODO Delete
 	}
 
 }

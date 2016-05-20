@@ -25,8 +25,6 @@ import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
 import org.deidentifier.arx.kettle.define.common.ComponentMultiStack;
-import org.deidentifier.arx.kettle.dialoge.ARXDialogFieldTab;
-import org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface;
 import org.deidentifier.arx.kettle.meta.ARXFields;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -51,12 +49,12 @@ import org.pentaho.di.ui.core.widget.TextVar;
 /**
  * Add the FieldWise Attribute Transformation Look
  * @author Florian Wiedner
- * @category ARXDialogFieldTab
+ * @category LayoutField
  * @since 1.7
  * @version 1.0
  *
  */
-public class ViewAttributeTransformation implements ARXPluginDialogInterface {
+public class ViewAttributeTransformation implements LayoutCompositeInterface {
 	
 	/**
 	 * Messages
@@ -81,7 +79,7 @@ public class ViewAttributeTransformation implements ARXPluginDialogInterface {
 	/**
 	 * The Parent Tab and Folder
 	 */
-	final ARXDialogFieldTab parentFieldTab;
+	final LayoutField parentFieldTab;
 	
 	 /** Widget */
     private  Combo                                            cmbType;
@@ -124,7 +122,7 @@ public class ViewAttributeTransformation implements ARXPluginDialogInterface {
 	 * @param transMeta The TransMeta from this Step
 	 * @param field The Starting default FieldName
 	 */
-	public ViewAttributeTransformation(final Composite parent,ARXPluginMeta meta, final PropsUI props, ModifyListener lsMod,ARXDialogFieldTab parentFieldTab,TransMeta transMeta,String field) {
+	public ViewAttributeTransformation(final Composite parent,ARXPluginMeta meta, final PropsUI props, ModifyListener lsMod,LayoutField parentFieldTab,TransMeta transMeta,String field) {
 		this.fieldName=field;
 		this.meta=meta;
 		this.props=props;
@@ -389,23 +387,15 @@ public class ViewAttributeTransformation implements ARXPluginDialogInterface {
 		}
 		this.updateFromAttributeType();
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.deidentifier.arx.kettle.dialoge.ARXPluginDialogInterface#saveData()
-	 */
-	public void saveData() {
-		//TODO Delete
-	}
 	
 	/*
 	 * Updates all Information after Changing the FieldName in this Tab
 	 */
 	private void updateFromAttributeType(){
 		if(this.cmbType.getItem(this.cmbType.getSelectionIndex()).equals("Sensitive")){
-			this.parentFieldTab.getPrivacy().enable(true);
+			this.parentFieldTab.setEnabled(true);
 		}else{
-			this.parentFieldTab.getPrivacy().enable(false);
+			this.parentFieldTab.setEnabled(false);
 		}
 		if(this.cmbType.getItem(this.cmbType.getSelectionIndex()).equals("Quasi-identifying")){
 			this.textHierarchie.setEnabled(true);
