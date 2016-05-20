@@ -23,7 +23,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -51,10 +50,6 @@ public class LayoutField implements LayoutCompositeInterface {
 	 */
 	private final PropsUI props;
 	/**
-	 * The ModifyListener from the MainDialog
-	 */
-	private final ModifyListener lsMod;
-	/**
 	 * The FieldName List from the Previous Step
 	 */
 	private String[] fieldNames;
@@ -80,15 +75,13 @@ public class LayoutField implements LayoutCompositeInterface {
 	 * @param parent The Parent Folder
 	 * @param meta The Meta for Saving
 	 * @param props The PropsUI
-	 * @param lsMod The Modification Listener
 	 * @param fieldNames The FieldNames
 	 * @param transMeta The TransMeta for this Step
 	 */
-	public LayoutField(final CTabFolder parent, ARXPluginMeta meta, final PropsUI props, ModifyListener lsMod,
+	public LayoutField(final CTabFolder parent, ARXPluginMeta meta, final PropsUI props,
 			String[] fieldNames, TransMeta transMeta) {
 		this.meta = meta;
 		this.props = props;
-		this.lsMod = lsMod;
 		this.fieldNames = fieldNames;
 		this.transMeta = transMeta;
 		this.field=fieldNames[0];
@@ -144,10 +137,12 @@ public class LayoutField implements LayoutCompositeInterface {
 		compositeBottom.setLayout(SWTUtil.createGridLayout(1));
 
 		this.fieldList(compositeTop);
-		this.transformation = new ViewAttributeTransformation(compositeCenter, meta, props, lsMod, this, transMeta,
+		this.transformation = new ViewAttributeTransformation(compositeCenter, meta, props, this, transMeta,
 				this.field);
 		this.privacy = new ViewCriteriaListField(compositeBottom, meta, props,
 				this.field);
+		this.transformation.setFieldName(this.field);
+		this.privacy.setFieldName(this.field);
 	}
 
 	/**
