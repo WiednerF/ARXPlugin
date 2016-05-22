@@ -6,7 +6,7 @@ import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
-import org.deidentifier.arx.kettle.define.LayoutGeneral;
+import org.deidentifier.arx.kettle.risk.ViewRisksDistributionPlot;
 import org.deidentifier.arx.kettle.risk.ViewRisksHIPAA;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -30,7 +30,7 @@ public class LayoutTopLeft {
 	public LayoutTopLeft(final Composite parent,ARXResult result,DataHandle result2, Data data, ARXConfiguration config,ARXPopulationModel population,LayoutRisks risk) {
 		this.result=result;
 		this.risk=risk;
-		this.result2=result2;
+		this.result2=data.getHandle();
 		this.data=data;
 		this.config=config;
 		this.population=population;
@@ -122,7 +122,7 @@ public class LayoutTopLeft {
 	     
 	      tabFieldComp.setLayout( SWTUtil.createGridLayoutWithEqualWidth(1));
       
-        new ViewRisksDistributionPlot(tabFieldComp,result,null,data,config,population,false);
+        new ViewRisksDistributionPlot(tabFieldComp,result2,population);
       
 
         tabFieldComp.layout();
