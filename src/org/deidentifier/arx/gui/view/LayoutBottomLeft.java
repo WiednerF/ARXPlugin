@@ -7,6 +7,7 @@ import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.define.LayoutGeneral;
+import org.deidentifier.arx.kettle.risk.ViewRisksPopulationUniqueness;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -27,7 +28,7 @@ public class LayoutBottomLeft {
 
 	public LayoutBottomLeft(final Composite parent,ARXResult result,DataHandle result2, Data data, ARXConfiguration config,ARXPopulationModel population,LayoutRisks parentLayout) {
 		this.data=data;
-		this.result2=result2;
+		this.result2=data.getHandle();
 		this.config=config;
 		this.population=population;
 		this.parent=parent;
@@ -86,7 +87,7 @@ public class LayoutBottomLeft {
      
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
-      new ViewRisksPopulationUniqueness(tabFieldComp,result,result2,data,config,population,false,true);
+      new ViewRisksPopulationUniqueness(tabFieldComp,result2,population,true);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
@@ -100,7 +101,7 @@ public class LayoutBottomLeft {
      
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
-      new ViewRisksPopulationUniqueness(tabFieldComp,result,result2,data,config,population,false,false);
+      new ViewRisksPopulationUniqueness(tabFieldComp,result2,population,false);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );

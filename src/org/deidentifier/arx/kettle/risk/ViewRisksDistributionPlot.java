@@ -80,12 +80,7 @@ public class ViewRisksDistributionPlot {
 	public ViewRisksDistributionPlot(final Composite parent,DataHandle data,ARXPopulationModel population) {
 		this.data=data;
 		this.population=population;
-		try{
 		this.build(parent);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
 	}
 	
 	/**

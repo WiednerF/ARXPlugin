@@ -1,13 +1,27 @@
-package org.deidentifier.arx.gui.view;
+/*
+ * Plugin for Kettle with ARX: Powerful Data Anonymization
+ * Copyright 2016 Florian Wiedner and contributors
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.deidentifier.arx.kettle.risk;
 
 import java.util.Arrays;
 
-import org.deidentifier.arx.ARXConfiguration;
 import org.deidentifier.arx.ARXPopulationModel;
-import org.deidentifier.arx.ARXResult;
-import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.risk.RiskEstimateBuilder;
 import org.deidentifier.arx.risk.RiskModelHistogram;
 import org.deidentifier.arx.risk.RiskModelPopulationUniqueness;
@@ -33,7 +47,14 @@ import org.swtchart.ILineSeries.PlotSymbolType;
 
 import org.swtchart.ISeries.SeriesType;
 
-
+/**
+ * Generates the Different Plots for the Population Uniqueness Modells
+ * @author Florian Wiedner
+ * @category Risk
+ * @since 1.7
+ * @version 1.0
+ *
+ */
 public class ViewRisksPopulationUniqueness {
 	
 	 /** Minimal width of a category label. */
@@ -44,33 +65,11 @@ public class ViewRisksPopulationUniqueness {
 
     /** Labels for the plot. */
     private static final String[]      LABELS             = getLabels(POINTS);
-
-    /**
-     * Creates a set of labels
-     * @param points
-     * @return
-     */
-    private static String[] getLabels(double[] points) {
-        String[] result = new String[points.length];
-        for (int i = 0; i < points.length; i++) {
-            result[i] = SWTUtil.getPrettyString(points[i]);
-        }
-        return result;
-    }
-    
-    /**
-     * Creates an array of points
-     * @return
-     */
-    private static double[] getPoints() {
-        return new double[]{0.0000001d, 0.000001d, 0.00001d, 
-                            0.0001d, 0.001d, 0.01d, 0.1d, 
-                            0.2d, 0.3d, 0.4d, 0.5d, 0.6d, 
-                            0.7d, 0.8d, 0.9d};
-    }
-
 	
-    private DataHandle result2;
+    /**
+     * The DataHandle for In- and Output
+     */
+    private DataHandle result;
 
 	/** View */
     private Composite root;
@@ -78,26 +77,34 @@ public class ViewRisksPopulationUniqueness {
     /** View */
     private Chart            chart;
     
-
-    private Data data;
+    /**
+     * The PopulationModel of the ARX at the Output
+     */
     private ARXPopulationModel population;
-    private boolean input;
+    /**
+     * If use all or only one Population Uniqueness Models
+     */
     private boolean all;
     
-	public ViewRisksPopulationUniqueness(final Composite parent,ARXResult result,DataHandle result2,Data data, ARXConfiguration config,ARXPopulationModel population,boolean input,boolean all) {
-		this.result2=result2;
-		this.data=data;
+    /**
+     * Creates the PopulationUniqueness Risk Plot
+     * @param parent The Parent Composite
+     * @param result The Result Data Handle
+     * @param population The PopulationModel
+     * @param all If use all Population Uniqueness Models or only one
+     */
+	public ViewRisksPopulationUniqueness(final Composite parent,DataHandle result,ARXPopulationModel population,boolean all) {
+		this.result=result;
 		this.population=population;
-		this.input=input;
 		this.all=all;
-		try{
 		this.build(parent);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
 	}
 	
-	public void build(Composite parent) throws InterruptedException{
+	/**
+	 * Creates, builds the View of the PopulationUniqueness Model
+	 * @param parent The Parent Composite
+	 */
+	private void build(Composite parent){
 		this.root = new Composite(parent, SWT.NONE);
         this.root.setLayout(new FillLayout());
         this.root.setLayoutData(SWTUtil.createFillGridDataBoth());
@@ -176,81 +183,85 @@ public class ViewRisksPopulationUniqueness {
         chart.setEnabled(false);
         updateCategories();
      // Enable/disable
-        DataHandle context;
-        if(!this.input){
-        	context=this.data.getHandle();
-        }else{
-        	context=this.result2;
-        }
-        	 double[] dataPitman;
-             double[] dataZayatz;
-             double[] dataSNB;
-             double[] dataDankar;
-             int idx;
-            
-             dataDankar = new double[POINTS.length];
-             dataPitman = new double[POINTS.length];
-             dataZayatz = new double[POINTS.length];
-              dataSNB = new double[POINTS.length];
-             RiskEstimateBuilder Basebuilder=context.getRiskEstimator(population);
-             int sampleSize=context.getNumRows();
-             RiskEstimateBuilder builder=Basebuilder;
-             for (idx = 0; idx < POINTS.length; idx++) {
-            	 RiskModelHistogram histogram = builder.getEquivalenceClassModel();
-                 ARXPopulationModel population = ARXPopulationModel.create(sampleSize, POINTS[idx]);
-                 builder = context.getRiskEstimator(population, histogram);
-                 
-                 if (idx == 0 && builder.getSampleBasedUniquenessRisk().getFractionOfUniqueTuples() == 0.0d) {
-                     Arrays.fill(dataDankar, 0.0d);
-                     Arrays.fill(dataPitman, 0.0d);
-                     Arrays.fill(dataZayatz, 0.0d);
-                     Arrays.fill(dataSNB, 0.0d);
-                     break;
-                 }
-                 RiskModelPopulationUniqueness populationBasedModel = builder.getPopulationBasedUniquenessRisk();
-                 dataDankar[idx] = populationBasedModel.getFractionOfUniqueTuplesDankar();
-                 dataPitman[idx] = populationBasedModel.getFractionOfUniqueTuplesPitman();
-                 dataZayatz[idx] = populationBasedModel.getFractionOfUniqueTuplesZayatz();
-                 dataSNB[idx] = populationBasedModel.getFractionOfUniqueTuplesSNB();
-             }
-             
-             makePercentage(dataDankar);
-             makePercentage(dataPitman);
-             makePercentage(dataZayatz);
-             makePercentage(dataSNB);
-             
-             ISeriesSet seriesSet = chart.getSeriesSet();
-             createSeries(seriesSet, dataPitman, "Pitman", PlotSymbolType.CIRCLE, new Color(Display.getCurrent(),0,0,0)); //$NON-NLS-1$
-             if(this.all){
-             createSeries(seriesSet, dataZayatz, "Zayatz", PlotSymbolType.CROSS, new Color(Display.getCurrent(),0,0,255)); //$NON-NLS-1$
-             createSeries(seriesSet, dataSNB, "SNB", PlotSymbolType.DIAMOND, new Color(Display.getCurrent(),0,255,0)); //$NON-NLS-1$
-             createSeries(seriesSet, dataDankar, "Dankar", PlotSymbolType.SQUARE, new Color(Display.getCurrent(),255,0,0)); //$NON-NLS-1$
-             chart.getLegend().setVisible(true);
-             }
-             
-             seriesSet.bringToFront("Pitman"); //$NON-NLS-1$
-             if(this.all){
-             seriesSet.bringToFront("Zayatz"); //$NON-NLS-1$
-             seriesSet.bringToFront("SNB"); //$NON-NLS-1$
+        Thread getData=new Thread(new Runnable(){
 
-             seriesSet.bringToFront("Dankar"); //$NON-NLS-1$
-             }
-             
-             IAxisSet axisSetI = chart.getAxisSet();
+			@Override
+			public void run() {
+	        	 double[] dataPitman;
+	             double[] dataZayatz;
+	             double[] dataSNB;
+	             double[] dataDankar;
+	             int idx;
+	            
+	             dataDankar = new double[POINTS.length];
+	             dataPitman = new double[POINTS.length];
+	             dataZayatz = new double[POINTS.length];
+	              dataSNB = new double[POINTS.length];
+	             RiskEstimateBuilder Basebuilder=result.getRiskEstimator(population);
+	             int sampleSize=result.getNumRows();
+	             RiskEstimateBuilder builder=Basebuilder;
+	             for (idx = 0; idx < POINTS.length; idx++) {
+	            	 RiskModelHistogram histogram = builder.getEquivalenceClassModel();
+	                 ARXPopulationModel population = ARXPopulationModel.create(sampleSize, POINTS[idx]);
+	                 builder = result.getRiskEstimator(population, histogram);
+	                 
+	                 if (idx == 0 && builder.getSampleBasedUniquenessRisk().getFractionOfUniqueTuples() == 0.0d) {
+	                     Arrays.fill(dataDankar, 0.0d);
+	                     Arrays.fill(dataPitman, 0.0d);
+	                     Arrays.fill(dataZayatz, 0.0d);
+	                     Arrays.fill(dataSNB, 0.0d);
+	                     break;
+	                 }
+	                 RiskModelPopulationUniqueness populationBasedModel = builder.getPopulationBasedUniquenessRisk();
+	                 dataDankar[idx] = populationBasedModel.getFractionOfUniqueTuplesDankar();
+	                 dataPitman[idx] = populationBasedModel.getFractionOfUniqueTuplesPitman();
+	                 dataZayatz[idx] = populationBasedModel.getFractionOfUniqueTuplesZayatz();
+	                 dataSNB[idx] = populationBasedModel.getFractionOfUniqueTuplesSNB();
+	             }
+	             
+	             makePercentage(dataDankar);
+	             makePercentage(dataPitman);
+	             makePercentage(dataZayatz);
+	             makePercentage(dataSNB);
+	             
+	             ISeriesSet seriesSet = chart.getSeriesSet();
+	             createSeries(seriesSet, dataPitman, "Pitman", PlotSymbolType.CIRCLE, new Color(Display.getCurrent(),0,0,0)); //$NON-NLS-1$
+	             if(all){
+	             createSeries(seriesSet, dataZayatz, "Zayatz", PlotSymbolType.CROSS, new Color(Display.getCurrent(),0,0,255)); //$NON-NLS-1$
+	             createSeries(seriesSet, dataSNB, "SNB", PlotSymbolType.DIAMOND, new Color(Display.getCurrent(),0,255,0)); //$NON-NLS-1$
+	             createSeries(seriesSet, dataDankar, "Dankar", PlotSymbolType.SQUARE, new Color(Display.getCurrent(),255,0,0)); //$NON-NLS-1$
+	             chart.getLegend().setVisible(true);
+	             }
+	             
+	             seriesSet.bringToFront("Pitman"); //$NON-NLS-1$
+	             if(all){
+	             seriesSet.bringToFront("Zayatz"); //$NON-NLS-1$
+	             seriesSet.bringToFront("SNB"); //$NON-NLS-1$
 
-             IAxis yAxisI = axisSetI.getYAxis(0);
-             yAxis.setRange(new Range(0d, 100d));
+	             seriesSet.bringToFront("Dankar"); //$NON-NLS-1$
+	             }
+	             
+	             IAxisSet axisSetI = chart.getAxisSet();
 
-             IAxis xAxisI = axisSetI.getXAxis(0);
-             xAxisI.setRange(new Range(0d, LABELS.length));
-             xAxisI.setCategorySeries(LABELS);
+	             IAxis yAxisI = axisSetI.getYAxis(0);
+	             yAxisI.setRange(new Range(0d, 100d));
 
-             chart.updateLayout();
-             chart.update();
-             updateCategories();
-             chart.layout();
-             chart.setRedraw(true);
-             chart.redraw();
+	             IAxis xAxisI = axisSetI.getXAxis(0);
+	             xAxisI.setRange(new Range(0d, LABELS.length));
+	             xAxisI.setCategorySeries(LABELS);
+
+	             chart.updateLayout();
+	             chart.update();
+	             updateCategories();
+	             chart.layout();
+	             chart.setRedraw(true);
+	             chart.redraw();			
+			}
+        	
+        });
+        
+        getData.run();
+        
 
 	}
 	
@@ -301,6 +312,29 @@ public class ViewRisksPopulationUniqueness {
        for (int i = 0; i < data.length; i++) {
            data[i] = data[i] * 100d;
        }
+   }
+   /**
+    * Creates a set of labels
+    * @param points
+    * @return
+    */
+   private static String[] getLabels(double[] points) {
+       String[] result = new String[points.length];
+       for (int i = 0; i < points.length; i++) {
+           result[i] = SWTUtil.getPrettyString(points[i]);
+       }
+       return result;
+   }
+   
+   /**
+    * Creates an array of points
+    * @return
+    */
+   private static double[] getPoints() {
+       return new double[]{0.0000001d, 0.000001d, 0.00001d, 
+                           0.0001d, 0.001d, 0.01d, 0.1d, 
+                           0.2d, 0.3d, 0.4d, 0.5d, 0.6d, 
+                           0.7d, 0.8d, 0.9d};
    }
 	
 

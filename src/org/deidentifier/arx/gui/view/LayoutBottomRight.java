@@ -7,6 +7,7 @@ import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.define.LayoutGeneral;
+import org.deidentifier.arx.kettle.risk.ViewRisksPopulationUniqueness;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -70,7 +71,7 @@ public class LayoutBottomRight {
      
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
-      new ViewRisksPopulationUniqueness(tabFieldComp,result,result2,data,config,population,true,true);
+      new ViewRisksPopulationUniqueness(tabFieldComp,result2,population,true);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
@@ -84,7 +85,7 @@ public class LayoutBottomRight {
      
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
-      new ViewRisksPopulationUniqueness(tabFieldComp,result,result2,data,config,population,true,false);
+      new ViewRisksPopulationUniqueness(tabFieldComp,result2,population,false);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
