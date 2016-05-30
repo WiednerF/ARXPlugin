@@ -126,7 +126,7 @@ public class LayoutRisks {
             public void widgetSelected(final SelectionEvent arg0) {
                 layoutBottomRight.setSelectionIndex(layoutBottomLeft.getSelectionIndex());
                 
-                if (layoutBottomLeft.getSelectionIndex() == 4) {
+                if (layoutBottomLeft.getSelectionIndex() == 3) {
                     layoutTopLeft.setSelectionIndex(2);
                     layoutTopRight.setSelectionIndex(2);
                 } else if (layoutBottomLeft.getSelectionIndex() == 0) {
@@ -162,7 +162,7 @@ public class LayoutRisks {
                 layoutTopRight.setSelectionIndex(layoutTopLeft.getSelectionIndex());
                 
                 if (layoutTopLeft.getSelectionIndex() == 2) {
-                    layoutBottomLeft.setSelectionIndex(4);
+                    layoutBottomLeft.setSelectionIndex(3);
                 } else if (layoutTopLeft.getSelectionIndex() == 3) {
                     layoutBottomLeft.setSelectionIndex(0);
                     layoutBottomRight.setSelectionIndex(0);
@@ -179,7 +179,7 @@ public class LayoutRisks {
                 layoutTopLeft.setSelectionIndex(layoutTopRight.getSelectionIndex());
 
                 if (layoutTopRight.getSelectionIndex() == 2) {
-                    layoutBottomLeft.setSelectionIndex(4);
+                    layoutBottomLeft.setSelectionIndex(3);
                 } else if (layoutTopRight.getSelectionIndex() == 3) {
                     layoutBottomLeft.setSelectionIndex(0);
                     layoutBottomRight.setSelectionIndex(0);

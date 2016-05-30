@@ -44,23 +44,6 @@ public class LayoutBottomRight {
 		this.buildReidentification(parent);
 		this.buildPopulationUniquess(parent);
 		this.buildPopulationUniquessAll(parent);
-		this.buildPopulation(parent);
-	}
-	
-
-	
-	private void buildPopulation(CTabFolder parent){
-		CTabItem tabField = new CTabItem( parent, SWT.NONE );
-	 	tabField.setText( Resources.getMessage("RiskAnalysis.24")   );   
-     
-      Composite tabFieldComp = new Composite( parent, SWT.NONE );
-     
-      tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
-      
-      new ViewRisksPopulationModel(tabFieldComp,result,result2,data,config,population,true);
-      
-      tabFieldComp.layout();
-      tabField.setControl( tabFieldComp );
 	}
 	
 	private void buildPopulationUniquessAll(CTabFolder parent){

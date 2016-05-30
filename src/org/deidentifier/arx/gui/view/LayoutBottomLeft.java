@@ -46,7 +46,6 @@ public class LayoutBottomLeft {
 		this.buildReidentification(parent);
 		this.buildPopulationUniquess(parent);
 		this.buildPopulationUniquessAll(parent);
-		this.buildPopulation(parent);
 		this.buildQuasiIdentifiers(parent);
 	}
 	
@@ -59,21 +58,6 @@ public class LayoutBottomLeft {
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
       new ViewRisksQuasiIdentifier(tabFieldComp,result,result2,data,config,population,false,this.parentLayout);
-      
-      tabFieldComp.layout();
-      tabField.setControl( tabFieldComp );
-	}
-	
-	
-	private void buildPopulation(CTabFolder parent){
-		CTabItem tabField = new CTabItem( parent, SWT.NONE );
-	 	tabField.setText( Resources.getMessage("RiskAnalysis.24")   );   
-     
-      Composite tabFieldComp = new Composite( parent, SWT.NONE );
-     
-      tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
-      
-      new ViewRisksPopulationModel(tabFieldComp,result,result2,data,config,population,false);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
