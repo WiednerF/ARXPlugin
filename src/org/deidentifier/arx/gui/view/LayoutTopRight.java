@@ -125,8 +125,8 @@ public class LayoutTopRight {
 		return this.folder.getSelectionIndex();
 	}
 	
-	public void update(){
-		//TODO Update
+	public void update(final String attributeRisk){
+		this.quasiIdentifier.update(attributeRisk);
 	}
 
 }

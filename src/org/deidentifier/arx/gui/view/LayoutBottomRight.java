@@ -99,9 +99,5 @@ public class LayoutBottomRight {
 	public int getSelectionIndex(){
 		return this.folder.getSelectionIndex();
 	}
-	
-	public void update(){
-		//TODO Update
-	}
 
 }

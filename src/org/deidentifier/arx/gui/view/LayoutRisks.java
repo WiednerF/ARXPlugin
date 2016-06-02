@@ -133,10 +133,6 @@ public class LayoutRisks {
                     layoutTopLeft.setSelectionIndex(3);
                     layoutTopRight.setSelectionIndex(3);
                 }
-                layoutTopLeft.update();
-                layoutTopRight.update();
-                layoutBottomLeft.update();
-                layoutBottomRight.update();
             }
         });
         layoutBottomRight.addSelectionListener(new SelectionAdapter() {
@@ -148,11 +144,6 @@ public class LayoutRisks {
                     layoutTopLeft.setSelectionIndex(3);
                     layoutTopRight.setSelectionIndex(3);
                 }
-            
-            layoutTopLeft.update();
-            layoutTopRight.update();
-            layoutBottomLeft.update();
-            layoutBottomRight.update();
             }
         });
         
@@ -167,10 +158,6 @@ public class LayoutRisks {
                     layoutBottomLeft.setSelectionIndex(0);
                     layoutBottomRight.setSelectionIndex(0);
                 }
-                layoutTopLeft.update();
-                layoutTopRight.update();
-                layoutBottomLeft.update();
-                layoutBottomRight.update();
             }
         });
         layoutTopRight.addSelectionListener(new SelectionAdapter() {
@@ -184,10 +171,6 @@ public class LayoutRisks {
                     layoutBottomLeft.setSelectionIndex(0);
                     layoutBottomRight.setSelectionIndex(0);
                 }
-                layoutTopLeft.update();
-                layoutTopRight.update();
-                layoutBottomLeft.update();
-                layoutBottomRight.update();
             }
         });
 
@@ -195,5 +178,11 @@ public class LayoutRisks {
         centerSash.setWeights(new int[] { WEIGHT_TOP, WEIGHT_BOTTOM });
         bottomSash.setWeights(new int[] { WEIGHT_LEFT, WEIGHT_RIGHT });
         center.setWeights(new int[] { WEIGHT_LEFT, WEIGHT_RIGHT });
+    }
+    
+    
+    public void updateQuasiIdentifier(final String attributeRisk){
+    	this.layoutTopLeft.update(attributeRisk);
+    	this.layoutTopRight.update(attributeRisk);
     }
 }

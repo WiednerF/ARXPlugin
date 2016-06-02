@@ -8,6 +8,7 @@ import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.define.LayoutGeneral;
 import org.deidentifier.arx.kettle.risk.ViewRisksPopulationUniqueness;
+import org.deidentifier.arx.kettle.risk.ViewRisksQuasiIdentifier;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -57,7 +58,7 @@ public class LayoutBottomLeft {
      
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
-      new ViewRisksQuasiIdentifier(tabFieldComp,result,result2,data,config,population,false,this.parentLayout);
+      new ViewRisksQuasiIdentifier(tabFieldComp,this.parentLayout);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
@@ -115,10 +116,6 @@ public class LayoutBottomLeft {
 	
 	public int getSelectionIndex(){
 		return this.folder.getSelectionIndex();
-	}
-	
-	public void update(){
-		//TODO Update
 	}
 
 }

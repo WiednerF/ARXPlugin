@@ -166,7 +166,7 @@ public class ViewRisksReidentificationRisksTable {
     /**
      * Returns a string containing all quasi-identifiers
      * @param context
-     * @return
+     * @return the String of all QuasiIdentifying Attributes
      */
     protected String getQuasiIdentifiers() {
       
