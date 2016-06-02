@@ -185,4 +185,8 @@ public class LayoutRisks {
     	this.layoutTopLeft.update(attributeRisk);
     	this.layoutTopRight.update(attributeRisk);
     }
+    
+    public void handleThresholdUpdateInMonitors(double recordsAtRisk, double highestRisk, double successRat) {
+    	this.layoutTopRight.handleThresholdUpdateInMonitors(recordsAtRisk, highestRisk, successRat);
+    }
 }

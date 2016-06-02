@@ -9,6 +9,7 @@ import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.risk.ViewRisksDistributionPlot;
 import org.deidentifier.arx.kettle.risk.ViewRisksDistributionTable;
 import org.deidentifier.arx.kettle.risk.ViewRisksQuasiIdentifierTable;
+import org.deidentifier.arx.kettle.risk.ViewRisksReidentificationRisks;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -58,7 +59,7 @@ public class LayoutTopRight {
      
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
-      this.reidentification=new ViewRisksReidentificationRisks(tabFieldComp,result,result2,data,config,population,true,null);
+      this.reidentification=new ViewRisksReidentificationRisks(tabFieldComp,result2,population);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
@@ -127,6 +128,10 @@ public class LayoutTopRight {
 	
 	public void update(final String attributeRisk){
 		this.quasiIdentifier.update(attributeRisk);
+	}
+	
+	public void handleThresholdUpdateInMonitors(double recordsAtRisk, double highestRisk, double successRat) {
+		this.reidentification.handleThresholdUpdateInMonitors(recordsAtRisk, highestRisk, successRat);
 	}
 
 }
