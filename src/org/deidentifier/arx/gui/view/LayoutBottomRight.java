@@ -8,6 +8,7 @@ import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.define.LayoutGeneral;
 import org.deidentifier.arx.kettle.risk.ViewRisksPopulationUniqueness;
+import org.deidentifier.arx.kettle.risk.ViewRisksReidentificationRisksTable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -82,7 +83,7 @@ public class LayoutBottomRight {
      
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
-      new ViewRisksReidentificationRisksTable(tabFieldComp,result,result2,data,config,population,true);
+      new ViewRisksReidentificationRisksTable(tabFieldComp,result2,data,population);
       
       tabFieldComp.layout();
       tabField.setControl( tabFieldComp );
