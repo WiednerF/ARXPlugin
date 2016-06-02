@@ -17,8 +17,8 @@
 package org.deidentifier.arx.kettle.define;
 
 import org.deidentifier.arx.gui.resources.Resources;
-import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.deidentifier.arx.kettle.meta.ARXFields;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;

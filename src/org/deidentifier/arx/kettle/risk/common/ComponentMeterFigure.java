@@ -11,7 +11,7 @@ package org.deidentifier.arx.kettle.risk.common;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 
-import org.deidentifier.arx.gui.view.SWTUtil;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.eclipse.draw2d.AbstractLayout;
 import org.eclipse.draw2d.FigureListener;
 import org.eclipse.draw2d.FigureUtilities;

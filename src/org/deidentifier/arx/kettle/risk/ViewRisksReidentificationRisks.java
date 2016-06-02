@@ -20,7 +20,7 @@ import org.deidentifier.arx.ARXPopulationModel;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.LayoutRisks;
-import org.deidentifier.arx.gui.view.SWTUtil;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.deidentifier.arx.kettle.risk.common.ComponentRiskMonitor;
 import org.deidentifier.arx.kettle.risk.common.ComponentRiskThresholds;
 import org.deidentifier.arx.kettle.risk.common.ComponentTitledSeparator;

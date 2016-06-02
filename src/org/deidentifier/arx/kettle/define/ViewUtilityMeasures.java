@@ -19,8 +19,8 @@ package org.deidentifier.arx.kettle.define;
 import java.util.List;
 
 import org.deidentifier.arx.gui.resources.Resources;
-import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.kettle.ARXPluginMeta;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.deidentifier.arx.metric.Metric;
 import org.deidentifier.arx.metric.Metric.AggregateFunction;
 import org.deidentifier.arx.metric.MetricDescription;

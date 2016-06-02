@@ -17,7 +17,7 @@
 package org.deidentifier.arx.kettle.risk;
 
 import org.deidentifier.arx.gui.view.LayoutRisks;
-import org.deidentifier.arx.gui.view.SWTUtil;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

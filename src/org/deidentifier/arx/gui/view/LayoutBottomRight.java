@@ -6,6 +6,7 @@ import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.deidentifier.arx.kettle.define.LayoutGeneral;
 import org.deidentifier.arx.kettle.risk.ViewRisksPopulationUniqueness;
 import org.deidentifier.arx.kettle.risk.ViewRisksReidentificationRisksTable;

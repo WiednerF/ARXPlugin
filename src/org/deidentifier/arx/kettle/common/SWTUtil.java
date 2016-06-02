@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.deidentifier.arx.gui.view;
+package org.deidentifier.arx.kettle.common;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

@@ -17,7 +17,7 @@
 package org.deidentifier.arx.kettle.risk.common;
 
 import org.deidentifier.arx.gui.resources.Resources;
-import org.deidentifier.arx.gui.view.SWTUtil;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.jface.resource.DeviceResourceException;
 import org.eclipse.nebula.visualization.xygraph.linearscale.Range;

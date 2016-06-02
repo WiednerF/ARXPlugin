@@ -18,7 +18,7 @@
 package org.deidentifier.arx.kettle.risk.common;
 
 import org.deidentifier.arx.gui.resources.Resources;
-import org.deidentifier.arx.gui.view.SWTUtil;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
