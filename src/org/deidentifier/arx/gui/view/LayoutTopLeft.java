@@ -9,6 +9,7 @@ import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.risk.ViewRisksDistributionPlot;
 import org.deidentifier.arx.kettle.risk.ViewRisksDistributionTable;
 import org.deidentifier.arx.kettle.risk.ViewRisksHIPAA;
+import org.deidentifier.arx.kettle.risk.ViewRisksQuasiIdentifierTable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -90,7 +91,7 @@ public class LayoutTopLeft {
      
       tabFieldComp.setLayout( SWTUtil.createGridLayout(1));
       
-      this.quasiIdentifier= new ViewRisksQuasiIdentifierTable(tabFieldComp,result,null,data,config,population,false);
+      this.quasiIdentifier= new ViewRisksQuasiIdentifierTable(tabFieldComp,result2,population);
       
       tabFieldComp.layout();
       tabField.setControl( scroller );
