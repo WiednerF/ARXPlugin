@@ -20,7 +20,7 @@ import org.deidentifier.arx.ARXPopulationModel;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.gui.view.SWTUtil;
-import org.deidentifier.arx.kettle.dialoge.resources.ClipboardHandlerTable;
+import org.deidentifier.arx.kettle.risk.common.ClipboardHandlerTable;
 import org.deidentifier.arx.risk.RiskEstimateBuilder;
 import org.deidentifier.arx.risk.RiskModelSampleRiskDistribution;
 import org.eclipse.swt.SWT;
