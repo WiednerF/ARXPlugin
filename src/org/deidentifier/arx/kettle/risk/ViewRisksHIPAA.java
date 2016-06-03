@@ -51,7 +51,7 @@ public class ViewRisksHIPAA {
     /**
      * The Data Handle
      */
-    private Data data;
+    private DataHandle result;
     /**
      * The Population Model
      */
@@ -60,11 +60,11 @@ public class ViewRisksHIPAA {
     /**
      * The View of the HIPAA in a list Table
      * @param parent The Parent Composite
-     * @param data The Data
+     * @param result The Data
      * @param population The Population Model
      */
-	public ViewRisksHIPAA(final Composite parent,Data data,ARXPopulationModel population) {
-		this.data=data;
+	public ViewRisksHIPAA(final Composite parent,DataHandle result,ARXPopulationModel population) {
+		this.result=result;
 		this.population=population;
 		try{
 		this.build(parent);
@@ -124,8 +124,7 @@ public class ViewRisksHIPAA {
 
 			@Override
 			public void run() {
-				DataHandle handle=data.getHandle();
-		        RiskEstimateBuilder builder= handle.getRiskEstimator(population);
+		        RiskEstimateBuilder builder= result.getRiskEstimator(population);
 		        HIPAAIdentifierMatch[] matches = builder.getHIPAAIdentifiers();
 		        // For all identifiers
 		        for (HIPAAIdentifierMatch item : matches) {

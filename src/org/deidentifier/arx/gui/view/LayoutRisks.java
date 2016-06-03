@@ -22,13 +22,20 @@ import org.deidentifier.arx.ARXPopulationModel;
 import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
+import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.common.SWTUtil;
+import org.deidentifier.arx.kettle.risk.LayoutTop;
+import org.deidentifier.arx.kettle.risk.ViewRisksReidentificationRisks;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableItem;
 
 /**
  * This class layouts the risk analysis view.
@@ -37,156 +44,168 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class LayoutRisks {
 
-    /** Constant */
-    private static final int          WEIGHT_TOP    = 75;
-    /** Constant */
-    private static final int          WEIGHT_BOTTOM = 25;
-    /** Constant */
-    private static final int          WEIGHT_LEFT   = 50;
-    /** Constant */
-    private static final int          WEIGHT_RIGHT  = 50;
+	/** Constant */
+	private static final int WEIGHT_TOP = 75;
+	/** Constant */
+	private static final int WEIGHT_BOTTOM = 25;
+	/** Constant */
+	private static final int WEIGHT_LEFT = 50;
+	/** Constant */
+	private static final int WEIGHT_RIGHT = 50;
 
-    /** View */
-    private final Composite           centerLeft;
-    /** View */
-    private final Composite           centerRight;
-    /** View */
-    private final Composite           bottomLeft;
-    /** View */
-    private final Composite           bottomRight;
-    /** View */
-    private final SashForm            centerSash;
-    
-    public LayoutTopLeft layoutTopLeft;
-    public LayoutTopRight layoutTopRight;
-    private LayoutBottomLeft layoutBottomLeft;
-    private LayoutBottomRight layoutBottomRight;
-    private Data data;
-    private ARXConfiguration config;
-    private ARXPopulationModel population;
-    
-    ARXResult result;
-    private DataHandle result2;
+	/** View */
+	private final Composite centerLeft;
+	/** View */
+	private final Composite centerRight;
+	/** View */
+	private final Composite bottomLeft;
+	/** View */
+	private final Composite bottomRight;
+	/** View */
+	private final SashForm centerSash;
 
-    /**
-     * Creates a new instance.
-     *
-     * @param parent
-     * @param controller
-     */
-    public LayoutRisks(final Composite parent,ARXResult result,DataHandle result2,Data data, ARXConfiguration config,ARXPopulationModel population) {
-		this.result=result;
-		this.result2=result2;
-		this.data=data;
-		this.config=config;
-		this.population=population;
-        // Create the SashForm with HORIZONTAL
-        centerSash = new SashForm(parent, SWT.VERTICAL);
-        centerSash.setLayoutData(SWTUtil.createFillGridData());
-        
-        // Create center composite
-        SashForm center = new SashForm(centerSash, SWT.HORIZONTAL | SWT.SMOOTH);
-        center.setLayoutData(SWTUtil.createFillGridData());
+	public LayoutTop layoutTopLeft;
+	public LayoutTop layoutTopRight;
+	private LayoutBottomLeft layoutBottomLeft;
+	private LayoutBottomRight layoutBottomRight;
+	private Data data;
+	private ARXConfiguration config;
+	private ARXPopulationModel population;
 
-        // Create left composite
-        centerLeft = new Composite(center, SWT.NONE);
-        centerLeft.setLayoutData(SWTUtil.createFillGridData());
-        centerLeft.setLayout(new FillLayout());
+	ARXResult result;
+	private DataHandle result2;
 
-        // Create right composite
-        centerRight = new Composite(center, SWT.NONE);
-        centerRight.setLayoutData(SWTUtil.createFillGridData());
-        centerRight.setLayout(new FillLayout());
+	/**
+	 * Creates a new instance.
+	 *
+	 * @param parent
+	 * @param controller
+	 */
+	public LayoutRisks(final Composite parent, ARXResult result, DataHandle result2, Data data, ARXConfiguration config,
+			ARXPopulationModel population) {
+		this.result = result;
+		this.result2 = result2;
+		this.data = data;
+		this.config = config;
+		this.population = population;
+		// Create the SashForm with HORIZONTAL
+		centerSash = new SashForm(parent, SWT.VERTICAL);
+		centerSash.setLayoutData(SWTUtil.createFillGridData());
 
-        // Create views
-        layoutTopLeft = new LayoutTopLeft(centerLeft,
-                                         result,result2,data,config,population,this);
-        layoutTopRight = new LayoutTopRight(centerRight,
-        		result,result2,data,config,population);
-        // Create bottom composite
-        final Composite compositeBottom = new Composite(centerSash, SWT.NONE);
-        compositeBottom.setLayout(new FillLayout());
-        final SashForm bottomSash = new SashForm(compositeBottom,
-                                                 SWT.HORIZONTAL | SWT.SMOOTH);
+		// Create center composite
+		SashForm center = new SashForm(centerSash, SWT.HORIZONTAL | SWT.SMOOTH);
+		center.setLayoutData(SWTUtil.createFillGridData());
 
-        bottomLeft = new Composite(bottomSash, SWT.NONE);
-        bottomLeft.setLayout(new FillLayout());
+		// Create left composite
+		centerLeft = new Composite(center, SWT.NONE);
+		centerLeft.setLayoutData(SWTUtil.createFillGridData());
+		centerLeft.setLayout(new FillLayout());
 
-        bottomRight = new Composite(bottomSash, SWT.NONE);
-        bottomRight.setLayout(new FillLayout());
+		// Create right composite
+		centerRight = new Composite(center, SWT.NONE);
+		centerRight.setLayoutData(SWTUtil.createFillGridData());
+		centerRight.setLayout(new FillLayout());
 
-        /** Create views**/
-        layoutBottomLeft = new LayoutBottomLeft(bottomLeft,
-        		result,result2,data,config,population,this);
-        layoutBottomRight = new LayoutBottomRight(bottomRight,
-        		result,result2,data,config,population);
-        // Sync folders
-        layoutBottomLeft.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent arg0) {
-                layoutBottomRight.setSelectionIndex(layoutBottomLeft.getSelectionIndex());
-                
-                if (layoutBottomLeft.getSelectionIndex() == 3) {
-                    layoutTopLeft.setSelectionIndex(2);
-                    layoutTopRight.setSelectionIndex(2);
-                } else if (layoutBottomLeft.getSelectionIndex() == 0) {
-                    layoutTopLeft.setSelectionIndex(3);
-                    layoutTopRight.setSelectionIndex(3);
-                }
-            }
-        });
-        layoutBottomRight.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent arg0) {
-                layoutBottomLeft.setSelectionIndex(layoutBottomRight.getSelectionIndex());
-                
-                if (layoutBottomRight.getSelectionIndex() == 0) {
-                    layoutTopLeft.setSelectionIndex(3);
-                    layoutTopRight.setSelectionIndex(3);
-                }
-            }
-        });
-        
-        layoutTopLeft.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent arg0) {
-                layoutTopRight.setSelectionIndex(layoutTopLeft.getSelectionIndex());
-                
-                if (layoutTopLeft.getSelectionIndex() == 2) {
-                    layoutBottomLeft.setSelectionIndex(3);
-                } else if (layoutTopLeft.getSelectionIndex() == 3) {
-                    layoutBottomLeft.setSelectionIndex(0);
-                    layoutBottomRight.setSelectionIndex(0);
-                }
-            }
-        });
-        layoutTopRight.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent arg0) {
-                layoutTopLeft.setSelectionIndex(layoutTopRight.getSelectionIndex());
+		// Create views
+		layoutTopLeft = new LayoutTop(centerLeft, data.getHandle(),population, this);
+		layoutTopRight = new LayoutTop(centerRight, result2, population);
+		// Create bottom composite
+		final Composite compositeBottom = new Composite(centerSash, SWT.NONE);
+		compositeBottom.setLayout(new FillLayout());
+		final SashForm bottomSash = new SashForm(compositeBottom, SWT.HORIZONTAL | SWT.SMOOTH);
 
-                if (layoutTopRight.getSelectionIndex() == 2) {
-                    layoutBottomLeft.setSelectionIndex(3);
-                } else if (layoutTopRight.getSelectionIndex() == 3) {
-                    layoutBottomLeft.setSelectionIndex(0);
-                    layoutBottomRight.setSelectionIndex(0);
-                }
-            }
-        });
+		bottomLeft = new Composite(bottomSash, SWT.NONE);
+		bottomLeft.setLayout(new FillLayout());
 
-        // Set sash weights
-        centerSash.setWeights(new int[] { WEIGHT_TOP, WEIGHT_BOTTOM });
-        bottomSash.setWeights(new int[] { WEIGHT_LEFT, WEIGHT_RIGHT });
-        center.setWeights(new int[] { WEIGHT_LEFT, WEIGHT_RIGHT });
-    }
-    
-    
-    public void updateQuasiIdentifier(final String attributeRisk){
-    	this.layoutTopLeft.update(attributeRisk);
-    	this.layoutTopRight.update(attributeRisk);
-    }
-    
-    public void handleThresholdUpdateInMonitors(double recordsAtRisk, double highestRisk, double successRat) {
-    	this.layoutTopRight.handleThresholdUpdateInMonitors(recordsAtRisk, highestRisk, successRat);
-    }
+		bottomRight = new Composite(bottomSash, SWT.NONE);
+		bottomRight.setLayout(new FillLayout());
+
+		/** Create views **/
+		layoutBottomLeft = new LayoutBottomLeft(bottomLeft, result, result2, data, config, population, this);
+		layoutBottomRight = new LayoutBottomRight(bottomRight, result, result2, data, config, population);
+		// Sync folders
+		layoutBottomLeft.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent arg0) {
+				layoutBottomRight.setSelectionIndex(layoutBottomLeft.getSelectionIndex());
+
+				if (layoutBottomLeft.getSelectionIndex() == 3) {
+					layoutTopLeft.setSelectionIndex(2);
+					layoutTopRight.setSelectionIndex(2);
+				} else if (layoutBottomLeft.getSelectionIndex() == 0) {
+					layoutTopLeft.setSelectionIndex(3);
+					layoutTopRight.setSelectionIndex(3);
+				}
+			}
+		});
+		layoutBottomRight.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent arg0) {
+				layoutBottomLeft.setSelectionIndex(layoutBottomRight.getSelectionIndex());
+
+				if (layoutBottomRight.getSelectionIndex() == 0) {
+					layoutTopLeft.setSelectionIndex(3);
+					layoutTopRight.setSelectionIndex(3);
+				}
+			}
+		});
+
+		layoutTopLeft.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent arg0) {
+				layoutTopRight.setSelectionIndex(layoutTopLeft.getSelectionIndex());
+
+				if (layoutTopLeft.getSelectionIndex() == 2) {
+					layoutBottomLeft.setSelectionIndex(3);
+				} else if (layoutTopLeft.getSelectionIndex() == 3) {
+					layoutBottomLeft.setSelectionIndex(0);
+					layoutBottomRight.setSelectionIndex(0);
+				}
+			}
+		});
+		layoutTopRight.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(final SelectionEvent arg0) {
+				layoutTopLeft.setSelectionIndex(layoutTopRight.getSelectionIndex());
+
+				if (layoutTopRight.getSelectionIndex() == 2) {
+					layoutBottomLeft.setSelectionIndex(3);
+				} else if (layoutTopRight.getSelectionIndex() == 3) {
+					layoutBottomLeft.setSelectionIndex(0);
+					layoutBottomRight.setSelectionIndex(0);
+				}
+			}
+		});
+
+		// Set sash weights
+		centerSash.setWeights(new int[] { WEIGHT_TOP, WEIGHT_BOTTOM });
+		bottomSash.setWeights(new int[] { WEIGHT_LEFT, WEIGHT_RIGHT });
+		center.setWeights(new int[] { WEIGHT_LEFT, WEIGHT_RIGHT });
+	}
+
+	public void updateQuasiIdentifier(final String attributeRisk) {
+		this.layoutTopLeft.update(attributeRisk);
+		this.layoutTopRight.update(attributeRisk);
+	}
+
+	public void handleThresholdUpdateInMonitors(double recordsAtRisk, double highestRisk, double successRat) {
+		this.layoutTopRight.handleThresholdUpdateInMonitors(recordsAtRisk, highestRisk, successRat);
+	}
+
+	// STATIC
+	public static Composite createItem(final CTabFolder parent, String key) {
+		CTabItem tabField = new CTabItem(parent, SWT.NONE);
+		tabField.setText(Resources.getMessage(key));
+		ScrolledComposite scroller = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		Composite tabFieldComp = new Composite(scroller, SWT.NONE);
+		tabFieldComp.setLayout(SWTUtil.createGridLayout(1));
+		tabFieldComp.layout();
+		tabField.setControl(scroller);
+		scroller.setContent(tabFieldComp);
+		scroller.setExpandVertical(true);
+		scroller.setExpandHorizontal(true);
+		scroller.setMinSize(tabFieldComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		return tabFieldComp;
+	}
+
 }
