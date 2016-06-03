@@ -14,14 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.deidentifier.arx.gui.view;
+package org.deidentifier.arx.kettle.risk;
 
 import org.deidentifier.arx.ARXPopulationModel;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.kettle.common.SWTUtil;
-import org.deidentifier.arx.kettle.risk.LayoutBottom;
-import org.deidentifier.arx.kettle.risk.LayoutTop;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;

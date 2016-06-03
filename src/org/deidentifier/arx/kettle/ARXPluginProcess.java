@@ -246,9 +246,9 @@ public class ARXPluginProcess {
 			return new ArrayList<String[]>();
 		} else {
 
-			DataHandle result2 = result.getOutput(false);
+			DataHandle output = result.getOutput(false);
 
-			Iterator<String[]> transformed = result2.iterator();
+			Iterator<String[]> transformed = output.iterator();
 			boolean first = true;
 			this.rowList = new ArrayList<String[]>();
 			while (transformed.hasNext()) {
@@ -261,7 +261,7 @@ public class ARXPluginProcess {
 			}
 			if (meta.isShowRiskAnalysis()) {
 
-				Thread risk = new ARXRiskAnalysis(result, result2, data, config, populationModel, Display.getDefault());
+				Thread risk = new ARXRiskAnalysis( output, data, populationModel, Display.getDefault());
 				Display.getDefault().asyncExec(risk);
 			}
 
