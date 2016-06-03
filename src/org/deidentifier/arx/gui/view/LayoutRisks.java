@@ -22,15 +22,12 @@ import org.deidentifier.arx.ARXPopulationModel;
 import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
-import org.deidentifier.arx.gui.resources.Resources;
 import org.deidentifier.arx.kettle.common.SWTUtil;
+import org.deidentifier.arx.kettle.risk.LayoutBottom;
 import org.deidentifier.arx.kettle.risk.LayoutTop;
 import org.deidentifier.arx.kettle.risk.ViewRisksReidentificationRisks;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -66,8 +63,8 @@ public class LayoutRisks {
 
 	public LayoutTop layoutTopLeft;
 	public LayoutTop layoutTopRight;
-	private LayoutBottomLeft layoutBottomLeft;
-	private LayoutBottomRight layoutBottomRight;
+	private LayoutBottom layoutBottomLeft;
+	private LayoutBottom layoutBottomRight;
 	private Data data;
 	private ARXConfiguration config;
 	private ARXPopulationModel population;
@@ -121,8 +118,8 @@ public class LayoutRisks {
 		bottomRight.setLayout(new FillLayout());
 
 		/** Create views **/
-		layoutBottomLeft = new LayoutBottomLeft(bottomLeft, result, result2, data, config, population, this);
-		layoutBottomRight = new LayoutBottomRight(bottomRight, result, result2, data, config, population);
+		layoutBottomLeft = new LayoutBottom(bottomLeft,data.getHandle(), data, population, this);
+		layoutBottomRight = new LayoutBottom(bottomRight, result2, data, population);
 		// Sync folders
 		layoutBottomLeft.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -190,22 +187,6 @@ public class LayoutRisks {
 
 	public void handleThresholdUpdateInMonitors(double recordsAtRisk, double highestRisk, double successRat) {
 		this.layoutTopRight.handleThresholdUpdateInMonitors(recordsAtRisk, highestRisk, successRat);
-	}
-
-	// STATIC
-	public static Composite createItem(final CTabFolder parent, String key) {
-		CTabItem tabField = new CTabItem(parent, SWT.NONE);
-		tabField.setText(Resources.getMessage(key));
-		ScrolledComposite scroller = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		Composite tabFieldComp = new Composite(scroller, SWT.NONE);
-		tabFieldComp.setLayout(SWTUtil.createGridLayout(1));
-		tabFieldComp.layout();
-		tabField.setControl(scroller);
-		scroller.setContent(tabFieldComp);
-		scroller.setExpandVertical(true);
-		scroller.setExpandHorizontal(true);
-		scroller.setMinSize(tabFieldComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		return tabFieldComp;
 	}
 
 }

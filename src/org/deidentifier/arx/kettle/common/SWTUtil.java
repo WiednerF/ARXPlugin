@@ -22,11 +22,15 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 import org.apache.commons.math3.analysis.function.Log;
+import org.deidentifier.arx.gui.resources.Resources;
 import org.eclipse.jface.resource.DeviceResourceException;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -674,4 +678,19 @@ public class SWTUtil {
             }
         }
     }
+	// STATIC
+	public static Composite createItem(final CTabFolder parent, String key) {
+		CTabItem tabField = new CTabItem(parent, SWT.NONE);
+		tabField.setText(Resources.getMessage(key));
+		ScrolledComposite scroller = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		Composite tabFieldComp = new Composite(scroller, SWT.NONE);
+		tabFieldComp.setLayout(createGridLayout(1));
+		tabFieldComp.layout();
+		tabField.setControl(scroller);
+		scroller.setContent(tabFieldComp);
+		scroller.setExpandVertical(true);
+		scroller.setExpandHorizontal(true);
+		scroller.setMinSize(tabFieldComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		return tabFieldComp;
+	}
 }

@@ -19,6 +19,7 @@ package org.deidentifier.arx.kettle.risk;
 import org.deidentifier.arx.ARXPopulationModel;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.view.LayoutRisks;
+import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.events.SelectionListener;
@@ -52,12 +53,7 @@ public class LayoutTop {
 	 *            The Population Model used
 	 */
 	public LayoutTop(final Composite parent, DataHandle result, ARXPopulationModel population) {
-		folder = new CTabFolder(parent, SWT.BORDER);
-		folder.setSimple(false);
-		this.build(folder, null, result, population);
-		// END TABS
-		folder.setSelection(0);
-
+		this(parent,result,population,null);
 	}
 
 	/**
@@ -88,17 +84,17 @@ public class LayoutTop {
 	 * @param population The Population Model used
 	 */
 	private void build(final CTabFolder folder, LayoutRisks risk, DataHandle result, ARXPopulationModel population) {
-		new ViewRisksDistributionPlot(LayoutRisks.createItem(folder, "RiskAnalysis.4"), result, population);
-		new ViewRisksDistributionTable(LayoutRisks.createItem(folder, "RiskAnalysis.0"), result, population);
-		this.quasiIdentifier = new ViewRisksQuasiIdentifierTable(LayoutRisks.createItem(folder, "RiskAnalysis.15"),
+		new ViewRisksDistributionPlot(SWTUtil.createItem(folder, "RiskAnalysis.4"), result, population);
+		new ViewRisksDistributionTable(SWTUtil.createItem(folder, "RiskAnalysis.0"), result, population);
+		this.quasiIdentifier = new ViewRisksQuasiIdentifierTable(SWTUtil.createItem(folder, "RiskAnalysis.15"),
 				result, population);
 		if (risk != null) {
 			this.reidentification = new ViewRisksReidentificationRisks(
-					LayoutRisks.createItem(folder, "RiskAnalysis.32"), result, population, risk);
-			new ViewRisksHIPAA(LayoutRisks.createItem(folder, "RiskAnalysis.26"), result, population);
+					SWTUtil.createItem(folder, "RiskAnalysis.32"), result, population, risk);
+			new ViewRisksHIPAA(SWTUtil.createItem(folder, "RiskAnalysis.26"), result, population);
 		} else {
 			this.reidentification = new ViewRisksReidentificationRisks(
-					LayoutRisks.createItem(folder, "RiskAnalysis.32"), result, population);
+					SWTUtil.createItem(folder, "RiskAnalysis.32"), result, population);
 		}
 	}
 

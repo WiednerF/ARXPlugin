@@ -115,7 +115,6 @@ public class ViewRisksQuasiIdentifier {
 		String selection = "";
 		int i = 0;
 		for (String temp : values) {
-			System.out.println(actual);
 			if (actual.equals(temp)) {
 				selection = index[i];
 				break;
