@@ -1,4 +1,4 @@
-package org.deidentifier.arx.gui.view;
+package org.deidentifier.arx.kettle.risk;
 
 
 import org.deidentifier.arx.ARXConfiguration;
@@ -7,6 +7,7 @@ import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.gui.resources.Resources;
+import org.deidentifier.arx.gui.view.LayoutRisks;
 import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -36,7 +37,7 @@ public class ARXRiskAnalysis extends Thread {
         shell.setImage(Resources.getImage("logo_64.png"));
         
 	    shell.setLayout(SWTUtil.createGridLayout(2));
-	    new LayoutRisks(shell,result,result2,data,config,population);
+	    new LayoutRisks(shell,result2,data,population);
 	      
 	          
         shell.pack();

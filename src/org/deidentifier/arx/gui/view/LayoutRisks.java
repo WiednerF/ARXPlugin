@@ -1,6 +1,6 @@
 /*
- * ARX: Powerful Data Anonymization
- * Copyright 2012 - 2015 Florian Kohlmayer, Fabian Prasser
+ * Plugin for Kettle with ARX: Powerful Data Anonymization
+ * Copyright 2016 Florian Wiedner and contributors
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.deidentifier.arx.gui.view;
 
-import org.deidentifier.arx.ARXConfiguration;
 import org.deidentifier.arx.ARXPopulationModel;
-import org.deidentifier.arx.ARXResult;
 import org.deidentifier.arx.Data;
 import org.deidentifier.arx.DataHandle;
 import org.deidentifier.arx.kettle.common.SWTUtil;
 import org.deidentifier.arx.kettle.risk.LayoutBottom;
 import org.deidentifier.arx.kettle.risk.LayoutTop;
-import org.deidentifier.arx.kettle.risk.ViewRisksReidentificationRisks;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableItem;
 
 /**
  * This class layouts the risk analysis view.
@@ -51,40 +46,69 @@ public class LayoutRisks {
 	private static final int WEIGHT_RIGHT = 50;
 
 	/** View */
-	private final Composite centerLeft;
+	private Composite centerLeft;
 	/** View */
-	private final Composite centerRight;
+	private Composite centerRight;
 	/** View */
-	private final Composite bottomLeft;
+	private Composite bottomLeft;
 	/** View */
-	private final Composite bottomRight;
+	private Composite bottomRight;
 	/** View */
-	private final SashForm centerSash;
+	private SashForm centerSash;
 
-	public LayoutTop layoutTopLeft;
-	public LayoutTop layoutTopRight;
+	/** View */
+	private LayoutTop layoutTopLeft;
+	/** View */
+	private LayoutTop layoutTopRight;
+	/** View */
 	private LayoutBottom layoutBottomLeft;
+	/** View */
 	private LayoutBottom layoutBottomRight;
+	/**
+	 * The Data Used with Config and Definitions
+	 */
 	private Data data;
-	private ARXConfiguration config;
+	/**
+	 * The Population Model is used
+	 */
 	private ARXPopulationModel population;
-
-	ARXResult result;
-	private DataHandle result2;
+	/**
+	 * The DataHandle for the Output
+	 */
+	private DataHandle output;
+	/**
+	 * The DataHandle for the Input
+	 */
+	private DataHandle input;
 
 	/**
-	 * Creates a new instance.
-	 *
+	 * Creates a new Instance and View
+	 * 
 	 * @param parent
-	 * @param controller
+	 *            The Parent Composite
+	 * @param output
+	 *            The Output
+	 * @param data
+	 *            The Data used
+	 * @param population
+	 *            The Population Model used
 	 */
-	public LayoutRisks(final Composite parent, ARXResult result, DataHandle result2, Data data, ARXConfiguration config,
-			ARXPopulationModel population) {
-		this.result = result;
-		this.result2 = result2;
+	public LayoutRisks(final Composite parent, DataHandle output, Data data, ARXPopulationModel population) {
+		this.output = output;
+		this.input = data.getHandle();
 		this.data = data;
-		this.config = config;
 		this.population = population;
+		this.build(parent);
+
+	}
+
+	/**
+	 * The build of the View
+	 * 
+	 * @param parent
+	 *            The Parent Composite
+	 */
+	private void build(final Composite parent) {
 		// Create the SashForm with HORIZONTAL
 		centerSash = new SashForm(parent, SWT.VERTICAL);
 		centerSash.setLayoutData(SWTUtil.createFillGridData());
@@ -104,8 +128,8 @@ public class LayoutRisks {
 		centerRight.setLayout(new FillLayout());
 
 		// Create views
-		layoutTopLeft = new LayoutTop(centerLeft, data.getHandle(),population, this);
-		layoutTopRight = new LayoutTop(centerRight, result2, population);
+		layoutTopLeft = new LayoutTop(centerLeft, input, population, this);
+		layoutTopRight = new LayoutTop(centerRight, output, population);
 		// Create bottom composite
 		final Composite compositeBottom = new Composite(centerSash, SWT.NONE);
 		compositeBottom.setLayout(new FillLayout());
@@ -118,8 +142,8 @@ public class LayoutRisks {
 		bottomRight.setLayout(new FillLayout());
 
 		/** Create views **/
-		layoutBottomLeft = new LayoutBottom(bottomLeft,data.getHandle(), data, population, this);
-		layoutBottomRight = new LayoutBottom(bottomRight, result2, data, population);
+		layoutBottomLeft = new LayoutBottom(bottomLeft, input, data, population, this);
+		layoutBottomRight = new LayoutBottom(bottomRight, output, data, population);
 		// Sync folders
 		layoutBottomLeft.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -180,11 +204,27 @@ public class LayoutRisks {
 		center.setWeights(new int[] { WEIGHT_LEFT, WEIGHT_RIGHT });
 	}
 
+	/**
+	 * Updating of the Risk Part at the Quasi Identifier
+	 * 
+	 * @param attributeRisk
+	 *            The Uniqueness Model used
+	 */
 	public void updateQuasiIdentifier(final String attributeRisk) {
 		this.layoutTopLeft.update(attributeRisk);
 		this.layoutTopRight.update(attributeRisk);
 	}
 
+	/**
+	 * The Update of the Monitors
+	 * 
+	 * @param recordsAtRisk
+	 *            The Records at Risk
+	 * @param highestRisk
+	 *            The Highest Risk Threshold
+	 * @param successRat
+	 *            The Success Rat Threshold
+	 */
 	public void handleThresholdUpdateInMonitors(double recordsAtRisk, double highestRisk, double successRat) {
 		this.layoutTopRight.handleThresholdUpdateInMonitors(recordsAtRisk, highestRisk, successRat);
 	}
