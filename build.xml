@@ -17,7 +17,7 @@
 	  <property name="distrib"        		location="distrib"/>
 	  <property name="libext"     			location="libext"/>
 	  <property name="libswt"     			location="libswt"/>
-	  <property name="deploydir"     		location="ARXPluginForDeploy"/>
+	  <property name="deploydir"     		location="release\arxKettlePlugin"/>
 	
 	  <target name="init" description="create timestamp and directories">
     	<echo>Init...</echo>
