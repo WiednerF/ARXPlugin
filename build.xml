@@ -1,4 +1,4 @@
-<project name="DummyPlugin" default="default" basedir=".">
+<project name="ARXPlugin" default="default" basedir=".">
 
 	  <description>
 	      Dummy plugin build file
@@ -12,21 +12,29 @@
 	  <!-- set global properties for this build -->
 	
 	  <property name="src"        			location="src"/> 
+	  <property name="doc"        			location="doc"/> 
 	  <property name="classes"        		location="classes"/> 
-	  <property name="lib"        			location="lib"/>
+	  <property name="lib"        			location="libtemp"/>
 	  <property name="distrib"        		location="distrib"/>
-	  <property name="libext"     			location="libext"/>
-	  <property name="libswt"     			location="libswt"/>
+	  <property name="libext"     			location="lib/libext"/>
+	  <property name="libint"     			location="lib/libint"/>
+	  <property name="libswt"     			location="lib/libext/libswt"/>
 	  <property name="deploydir"     		location="release\arxKettlePlugin"/>
 	
 	  <target name="init" description="create timestamp and directories">
     	<echo>Init...</echo>
 	  	
 	    <tstamp/>
+	  	<delete dir="${doc}"/>
+	  	<mkdir dir="${doc}"/>
 	    <mkdir dir="${classes}"/>
 	    <mkdir dir="${lib}"/>
 	    <mkdir dir="${distrib}"/>
 	  </target>
+	
+	<target name="javadoc" depends="init" description="makes the Javadoc">
+		 <javadoc sourcepath="${src}" destdir="${doc}"/>
+	</target>
 
 	  <!--
 	       ==========================
@@ -34,13 +42,14 @@
 	       ==========================
 	  -->
 
-	  <target name="compile" depends="init" description="compile the source " >
+	  <target name="compile" depends="javadoc" description="compile the source " >
 	  	<echo>Compiling ARX Plugin...</echo>
 	    <javac srcdir="${src}" 
 	    	   destdir="${classes}">
 
 	    	<classpath id="cpath">
 				<fileset dir="${libext}" 		includes="*.jar"/>
+	    		<fileset dir="${libint}" 		includes="*.jar"/>
 				<fileset dir="${libswt}" 		includes="*.jar"/>
 				<fileset dir="${libswt}/win32/" includes="*.jar"/>
 		  		</classpath>
@@ -67,12 +76,13 @@
 	       ==========================
 	  -->
 		
-	  <target name="dummy" depends="compile, copy" description="generate the Dummy Plugin library dummy.jar">
-	  	<echo>Generating the Kettle library arx.jar ...</echo>
-	  	<jar 
-	    	jarfile="${lib}/arx.jar" 
+	  <target name="dummy" depends="compile, copy" description="generate the ARX Plugin library arxKettlePlugin.jar">
+	  	<echo>Generating the Kettle library arxKettlePlugin.jar ...</echo>
+	  	
+	  	 <jar 
+	    	jarfile="${lib}/arxKettlePlugin.jar" 
 	    	basedir="${classes}" 
-	    	includes="**/*"/>	 
+	    	includes="**/*"/>
 	  </target>
 
 	  <!--
@@ -104,23 +114,26 @@
 	    		includes="**/*.*"/>
 	  	    </copy>
 	  </target>
+	
+	<!--
+		       ==========================
+		              C L E A N
+		       ==========================
+		  -->
+
+		  <target name="clean"  depends="deploy" description="clean up generated files" >
+		    <delete dir="${classes}"/>
+		    <delete dir="${lib}"/>
+		  	<delete dir="bin"/>
+		  </target>
 
 	<!--
 	       ==========================
 	          Default target: all
 	       ==========================
 	  -->
-	<target name="default" depends="deploy" description="default = build all"/>
+	<target name="default" depends="clean" description="default = build all"/>
 
-	<!--
-	       ==========================
-	              C L E A N
-	       ==========================
-	  -->
-
-	  <target name="clean"  description="clean up generated files" >
-	    <delete dir="${classes}"/>
-	    <delete dir="${lib}"/>
-	  </target>
+	
 	
 </project>
