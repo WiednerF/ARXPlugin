@@ -1,9 +1,0 @@
-m
-rdistrib
-rdistrib/lib
-rlib
-rsrc/org/deidentifier/arx/kettle
-rsrc/org/deidentifier/arx/kettle/attribut
-rsrc/org/deidentifier/arx/kettle/dialoge
-rsrc/org/deidentifier/arx/kettle/dialoge/resources
-rsrc/org/deidentifier/arx/kettle/messages
